@@ -1,0 +1,22 @@
+- name: Install MediaWiki skins
+
+  hosts: mw_hosts
+
+  roles:
+    - install_skins
+
+  environment: "{{ PROXY_ENV | default({}) }}"
+
+  vars:
+
+    MW_SKINS_GIT_URL_ROOT: "{{ WMF_GIT_URL_ROOT }}/skins"
+
+    SKINS:
+
+      - name: "Vector"
+        url: "{{ MW_SKINS_GIT_URL_ROOT }}/Vector.git"
+        version: "{{ MW_RELEASE }}"
+
+      - name: "foreground"
+        url: https://github.com/thingles/foreground.git
+        version: develop

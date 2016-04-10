@@ -1,0 +1,11 @@
+[db_hosts]
+db1
+db2
+
+[mw_hosts]
+mw1
+mw2
+
+[all:children]
+db_hosts
+mw_hosts

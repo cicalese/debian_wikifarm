@@ -1,0 +1,70 @@
+- name: create global wiki farm config file
+  template:
+    src=wikifarm.conf.j2
+    dest="{{ APACHE_CONF_DIRECTORY }}/wikifarm.conf"
+    mode=0644
+
+- name: create optional wiki farm config file
+  template:
+    src=optional.conf.j2
+    dest="{{ APACHE_CONF_DIRECTORY }}/optional.conf"
+    mode=0644
+
+- name: create redirect file
+  template:
+    src=http_redirect.conf.j2
+    dest="{{ APACHE_CONF_DIRECTORY }}/http_redirect.conf"
+    mode=0644
+
+- name: backup original Apache configuration file
+  shell: mv /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.orig
+    creates=/etc/httpd/conf/httpd.conf.orig
+
+- name: restore original Apache configuration file
+  shell: cp /etc/httpd/conf/httpd.conf.orig /etc/httpd/conf/httpd.conf
+
+- name: edit Apache configuration file 1/3
+  replace:
+    dest=/etc/httpd/conf/httpd.conf
+    regexp="/var/www/html"
+    replace="{{ APACHE_HTML_DIRECTORY }}"
+    backup=yes
+
+- name: edit Apache configuration file 2/3
+  replace:
+    dest=/etc/httpd/conf/httpd.conf
+    regexp="^Listen(.*)$"
+    replace="Listen {{ APACHE_LISTEN_ADDRESS }}\nListen {{ REDIRECT_LISTEN_ADDRESS }}"
+
+- name: edit Apache configuration file 3/3
+  lineinfile:
+    dest=/etc/httpd/conf/httpd.conf
+    insertafter=EOF
+    line="Include {{ APACHE_CONF_DIRECTORY }}/wikifarm.conf"
+
+- name: copy wiki farm index file
+  template:
+    src=wiki_index.php.j2
+    dest="{{ APACHE_HTML_DIRECTORY }}/index.php"
+    mode=0600
+    owner=apache
+    group=apache
+
+- name: restore Apache file context
+  shell: restorecon -Rv {{ APACHE_DIRECTORY }}
+
+- name: add firewall rule
+  shell: iptables -I INPUT -p tcp --dport {{ REDIRECT_LISTEN_PORT }} -j ACCEPT
+
+- name: save firewall rule
+  shell: service iptables save
+
+- name: configure Apache to start at boot
+  service:
+    name=httpd
+    enabled=yes
+
+- name: start Apache
+  service:
+    name=httpd
+    state=restarted

@@ -1,0 +1,62 @@
+- name: Add a wiki farm as a client to DB hosts
+
+  hosts: db_hosts
+
+  tasks:
+    - name: check for existance of firewall rule
+      shell: iptables -C INPUT -p tcp --dport {{ MYSQL_PORT }} -s {{ MW_HOST }} -j ACCEPT
+      register: firewall_rule_exists
+      ignore_errors: true
+      when: inventory_hostname != MW_HOST
+
+    - name: add firewall rule
+      shell: iptables -I INPUT -p tcp --dport {{ MYSQL_PORT }} -s {{ MW_HOST }} -j ACCEPT
+      when: inventory_hostname != MW_HOST and firewall_rule_exists.rc == 1
+
+    - name: save firewall rules
+      shell: service iptables save
+      when: inventory_hostname != MW_HOST and firewall_rule_exists.rc == 1
+
+    - name: grant access to empty wiki to wiki user (db host != wiki host)
+      mysql_user:
+        name={{ MYSQL_WIKI_USER }}
+        password={{ MYSQL_WIKI_PASSWORD }}
+        priv="{{ EMPTY_WIKI_NAME }}.*:SELECT,INSERT,UPDATE,DELETE,INDEX,ALTER,CREATE,DROP,CREATE TEMPORARY TABLES"
+        append_privs=true
+        host={{ MW_HOST }}
+        login_user=root
+        login_password={{ MYSQL_ROOT_PASSWORD }}
+      when: inventory_hostname != MW_HOST
+
+    - name: grant access to empty wiki to wiki user (db host == wiki host)
+      mysql_user:
+        name={{ MYSQL_WIKI_USER }}
+        password={{ MYSQL_WIKI_PASSWORD }}
+        priv="{{ EMPTY_WIKI_NAME }}.*:SELECT,INSERT,UPDATE,DELETE,INDEX,ALTER,CREATE,DROP,CREATE TEMPORARY TABLES"
+        append_privs=true
+        host=localhost
+        login_user=root
+        login_password={{ MYSQL_ROOT_PASSWORD }}
+      when: inventory_hostname == MW_HOST
+
+    - name: grant access to shared wiki database to wiki user (db host != wiki host)
+      mysql_user:
+        name={{ MYSQL_WIKI_USER }}
+        password={{ MYSQL_WIKI_PASSWORD }}
+        priv="{{ SHARED_WIKI_DB_NAME }}.*:SELECT,INSERT,UPDATE,DELETE,INDEX,ALTER,CREATE,DROP,CREATE TEMPORARY TABLES"
+        append_privs=true
+        host={{ MW_HOST }}
+        login_user=root
+        login_password={{ MYSQL_ROOT_PASSWORD }}
+      when: inventory_hostname != MW_HOST and SHARED_WIKI_DB_NAME is defined
+
+    - name: grant access to shared wiki database to wiki user (db host == wiki host)
+      mysql_user:
+        name={{ MYSQL_WIKI_USER }}
+        password={{ MYSQL_WIKI_PASSWORD }}
+        priv="{{ SHARED_WIKI_DB_NAME }}.*:SELECT,INSERT,UPDATE,DELETE,INDEX,ALTER,CREATE,DROP,CREATE TEMPORARY TABLES"
+        append_privs=true
+        host=localhost
+        login_user=root
+        login_password={{ MYSQL_ROOT_PASSWORD }}
+      when: inventory_hostname == MW_HOST and SHARED_WIKI_DB_NAME is defined

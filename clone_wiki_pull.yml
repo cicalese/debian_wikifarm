@@ -1,0 +1,40 @@
+- name: Dump and fetch source database to controller
+
+  hosts: "{{ FROM_DB_HOST | default(FROM_MW_HOST) }}"
+
+  gather_facts: no
+
+  tasks:
+
+    - name: dump source database
+      mysql_db:
+        state=dump
+        name={{ FROM_WIKI_NAME }}
+        target={{ CLONE_DIRECTORY }}/{{ FROM_WIKI_NAME }}-{{ FROM_DB_HOST | default(FROM_MW_HOST) }}.sql
+        login_user=root
+        login_password={{ MYSQL_ROOT_PASSWORD }}
+
+    - name: fetch source database to controller
+      fetch:
+        src={{ CLONE_DIRECTORY }}/{{ FROM_WIKI_NAME }}-{{ FROM_DB_HOST | default(FROM_MW_HOST) }}.sql
+        dest={{ CLONE_DIRECTORY }}/
+        flat=yes
+        fail_on_missing=yes
+
+- name: Archive and fetch source wiki instance directory to controller
+
+  hosts: "{{ FROM_MW_HOST }}"
+
+  gather_facts: no
+
+  tasks:
+
+    - name: archive source wiki instance directory
+      shell: tar cfj {{ CLONE_DIRECTORY }}/{{ FROM_WIKI_NAME }}-{{ FROM_MW_HOST }}.tar.bz2 -C {{ MW_INSTANCE_DIRECTORY }} {{ FROM_WIKI_NAME }}
+
+    - name: fetch source wiki instance directory to controller
+      fetch:
+        src={{ CLONE_DIRECTORY }}/{{ FROM_WIKI_NAME }}-{{ FROM_MW_HOST }}.tar.bz2
+        dest={{ CLONE_DIRECTORY }}/
+        flat=yes
+        fail_on_missing=yes

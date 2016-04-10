@@ -1,0 +1,32 @@
+- name: install packages
+  yum:
+    name={{ item }}
+    state=latest
+  with_items: "{{ PACKAGES }}"
+
+- name: add epel repo (1/2)
+  get_url:
+    url=https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm
+    dest=/root/epel-release-latest-6.noarch.rpm
+    validate_certs={{ VALIDATE_CERTS }}
+
+- name: add epel repo (2/2)
+  shell: rpm -Uvh epel-release-latest-6.noarch.rpm
+  args:
+    chdir: /root
+  ignore_errors: true
+
+- name: get remi repo
+  get_url:
+    url=http://rpms.remirepo.net/enterprise/remi.repo
+    dest=/etc/yum.repos.d
+    validate_certs={{ VALIDATE_CERTS }}
+
+- name: enable remi repo
+  shell: yum-config-manager --enable remi-php55
+
+- name: copy public key
+  authorized_key:
+    user=root
+    key="{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+    manage_dir=no

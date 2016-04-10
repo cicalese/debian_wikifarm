@@ -1,0 +1,133 @@
+<?php
+
+# Protect against web entry
+if ( !defined( 'MEDIAWIKI' ) ) {
+	exit;
+}
+
+# To run commands from the command line against this wiki, do the following:
+# export WIKI_NAME=<wikiname>
+# where <wikiname> is the name of the wiki you want to work with.
+# Then run your php scripts.
+if (isset($_SERVER['WIKI_NAME'])) {
+  $wgSitename = $_SERVER['WIKI_NAME'];
+} else {
+  die("WIKI_NAME not set.");
+}
+$wgMetaNamespace = $wgSitename;
+
+if( file_exists( "WikiFarm/Debug.php" ) ) {
+  require_once( "WikiFarm/Debug.php" );
+}
+
+require_once( "WikiFarm/Server.php" );
+require_once( "WikiFarm/Keys.php" );
+
+$INSTANCE_DIR = "{{ MW_INSTANCE_DIRECTORY }}/$wgSitename";
+
+## The URL base path to the directory containing the wiki;
+## defaults for all runtime URL paths are based off of this.
+## For more information on customizing the URLs
+## (like /w/index.php/Page_title to /wiki/Page_title) please see:
+## https://www.mediawiki.org/wiki/Manual:Short_URL
+$wgScriptPath = "/$wgSitename";
+
+## The relative URL path to the skins directory
+$wgResourceBasePath = $wgScriptPath;
+
+## The relative URL path to the logo.
+if( file_exists( "$INSTANCE_DIR/branding/logo.png" ) ) {
+  $wgLogo = "/$wgSitename/branding/logo.png";
+} else {
+  $wgLogo = "$wgResourceBasePath/resources/assets/wiki.png";
+}
+if( file_exists( "$INSTANCE_DIR/branding/favicon.ico" ) ) {
+  $wgFavicon = "/$wgSitename/branding/favicon.ico";
+}
+
+require_once( "WikiFarm/Email.php" );
+
+## Database settings
+$wgDBtype = "mysql";
+$wgDBserver = "{{ DB_HOST | default('localhost') }}:{{ MYSQL_PORT | default(3306) }}";
+$wgDBname = $wgSitename;
+$wgDBuser = "{{ MYSQL_WIKI_USER }}";
+$wgDBpassword = "{{ MYSQL_WIKI_PASSWORD }}";
+
+# MySQL specific settings
+$wgDBprefix = "";
+
+# MySQL table options to use during installation or update
+$wgDBTableOptions = "ENGINE=InnoDB, DEFAULT CHARSET=binary";
+
+# Experimental charset support for MySQL 5.0.
+$wgDBmysql5 = false;
+
+## Shared memory settings
+$wgMainCacheType = CACHE_ACCEL;
+$wgMemCachedServers = array();
+
+## Set $wgCacheDirectory to a writable directory on the web server
+## to make your wiki go slightly faster. The directory should not
+## be publically accessible from the web.
+#$wgCacheDirectory = "$IP/cache";
+
+require_once( "WikiFarm/Upload.php" );
+
+# Site language code, should be one of the list in ./languages/Names.php
+$wgLanguageCode = "en";
+
+## For attaching licensing metadata to pages, and displaying an
+## appropriate copyright notice / icon. GNU Free Documentation
+## License and Creative Commons licenses are supported so far.
+$wgRightsPage = ""; # Set to the title of a wiki page that describes your license/copyright
+$wgRightsUrl = "";
+$wgRightsText = "";
+$wgRightsIcon = "";
+
+# Path to the GNU diff3 utility. Used for conflict resolution.
+$wgDiff3 = "/usr/bin/diff3";
+
+if( file_exists( "WikiFarm/WikiFamilyPreConfiguration.php" ) ) {
+  require_once( "WikiFarm/WikiFamilyPreConfiguration.php" );
+}
+
+require_once( "WikiFarm/Skins.php" );
+
+if( file_exists( "WikiFarm/Interwiki.php" ) ) {
+  require_once( "WikiFarm/Interwiki.php" );
+}
+
+if( file_exists( "$INSTANCE_DIR/Namespaces.php" ) ) {
+  require_once( "$INSTANCE_DIR/Namespaces.php" );
+}
+
+if( file_exists( "$INSTANCE_DIR/PreConfiguration.php" ) ) {
+  require_once( "$INSTANCE_DIR/PreConfiguration.php" );
+}
+
+$ED = __DIR__ . '/extensions';
+
+if( file_exists( "WikiFarm/Authentication.php" ) ) {
+  require_once( "WikiFarm/Authentication.php" );
+}
+
+if( file_exists( "WikiFarm/Permissions.php" ) ) {
+  require_once( "WikiFarm/Permissions.php" );
+}
+
+if( file_exists( "WikiFarm/GlobalExtensions.php" ) ) {
+  require_once( "WikiFarm/GlobalExtensions.php" );
+}
+
+if( file_exists( "WikiFarm/LocalExtensions.php" ) ) {
+  require_once( "WikiFarm/LocalExtensions.php" );
+}
+
+if( file_exists( "$INSTANCE_DIR/PostConfiguration.php" ) ) {
+  require_once( "$INSTANCE_DIR/PostConfiguration.php" );
+}
+
+if( file_exists( "WikiFarm/WikiFamilyPostConfiguration.php" ) ) {
+  require_once( "WikiFarm/WikiFamilyPostConfiguration.php" );
+}

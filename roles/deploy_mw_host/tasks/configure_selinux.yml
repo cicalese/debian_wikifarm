@@ -1,0 +1,26 @@
+- name: set certificate directory file context
+  shell: semanage fcontext -a -t squid_conf_t "{{ CERT_DIRECTORY }}(/.*)?"
+
+- name: set Apache HTML file context
+  shell: semanage fcontext -a -t httpd_sys_content_t "{{ APACHE_HTML_DIRECTORY }}(/.*)?"
+
+- name: set Apache redirect file context
+  shell: semanage fcontext -a -t httpd_sys_content_t "{{ APACHE_REDIRECT_DIRECTORY }}(/.*)?"
+
+- name: set Apache configuration file context
+  shell: semanage fcontext -a -t httpd_config_t "{{ APACHE_CONF_DIRECTORY }}(/.*)?"
+
+- name: set SELinux booleans 1/4
+  shell: setsebool -P httpd_setrlimit 1
+
+- name: set SELinux booleans 2/4
+  shell: setsebool -P httpd_can_network_connect 1
+
+- name: set SELinux booleans 3/4
+  shell: setsebool -P httpd_can_network_connect_db 1
+
+- name: set SELinux booleans 4/4
+  shell: setsebool -P httpd_unified 1
+
+- name: set MediaWiki file context
+  shell: semanage fcontext -a -t httpd_sys_content_t "{{ MW_DIRECTORY }}(/.*)?"

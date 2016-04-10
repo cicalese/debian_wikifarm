@@ -1,0 +1,84 @@
+- name: copy configuration files
+  copy:
+    src={{ item }}
+    dest={{ MW_WIKIFARM_CONFIG_DIRECTORY }}/{{ item }}
+    force=no
+    mode=644
+    owner=apache
+    group=apache
+  with_items:
+    - GlobalExtensions.php
+    - LocalExtensions.php
+
+- name: get extensions from composer
+  shell: composer require {{ item.composer }}:{{ item.version | default("dev-master") }}
+    chdir={{ MW_CODE_RELEASE_DIRECTORY }}
+  with_items: "{{ EXTENSIONS }}"
+  when: item.composer is defined
+
+- name: check out extensions from git
+  git:
+    repo={{ item.url }}
+    dest={{ MW_CODE_RELEASE_DIRECTORY }}/extensions/{{ item.name }}
+    version={{ item.version }}
+    accept_hostkey=yes
+  with_items: "{{ EXTENSIONS }}"
+  when: item.url is defined
+
+- name: initialize/update submodules
+  shell: git submodule init; git submodule update
+    chdir={{ MW_CODE_RELEASE_DIRECTORY }}/extensions/{{ item.name }}
+  with_items: "{{ EXTENSIONS }}"
+  when: item.submodule is defined and item.submodule
+
+- name: run composer update for extensions that require it
+  shell: composer update
+    chdir={{ MW_CODE_RELEASE_DIRECTORY }}/extensions/{{ item.name }}
+  with_items: "{{ EXTENSIONS }}"
+  when: item.composer_update is defined and item.composer_update
+
+- name: configure global extensions 1/3
+  lineinfile:
+    dest={{ MW_WIKIFARM_CONFIG_DIRECTORY }}/GlobalExtensions.php
+    regexp="['\"/]{{ item.name }}(.php|)['\"]"
+    line="wfLoadExtension( \"{{ item.name }}\" );"
+  with_items: "{{ EXTENSIONS }}"
+  when: item.enable is defined and item.enable == "global" and (not item.legacy is defined or not item.legacy)
+
+- name: configure global extensions 2/3
+  lineinfile:
+    dest={{ MW_WIKIFARM_CONFIG_DIRECTORY }}/GlobalExtensions.php
+    regexp="['\"/]{{ item.name }}(.php|)['\"]"
+    line="require_once( \"$EXTENSION_DIRECTORY/{{ item.name }}/{{ item.name }}.php\" );"
+  with_items: "{{ EXTENSIONS }}"
+  when: item.enable is defined and item.enable == "global" and item.legacy is defined and item.legacy
+
+- name: configure global extensions 3/3
+  lineinfile:
+    dest={{ MW_WIKIFARM_CONFIG_DIRECTORY }}/GlobalExtensions.php
+    line="\n{{ item.config }}"
+  with_items: "{{ EXTENSIONS }}"
+  when: ((item.enable is defined and item.enable == "global") or item.composer is defined) and item.config is defined
+
+- name: configure local extensions 1/3
+  lineinfile:
+    dest={{ MW_WIKIFARM_CONFIG_DIRECTORY }}/LocalExtensions.php
+    regexp="['\"/]{{ item.name }}(.php|)['\"]"
+    line="wfLoadExtension( \"{{ item.name }}\" );"
+  with_items: "{{ EXTENSIONS }}"
+  when: item.enable is defined and item.enable == "local" and (not item.legacy is defined or not item.legacy)
+
+- name: configure local extensions 2/3
+  lineinfile:
+    dest={{ MW_WIKIFARM_CONFIG_DIRECTORY }}/LocalExtensions.php
+    regexp="['\"/]{{ item.name }}(.php|)['\"]"
+    line="require_once( \"$EXTENSION_DIRECTORY/{{ item.name }}/{{ item.name }}.php\" );"
+  with_items: "{{ EXTENSIONS }}"
+  when: item.enable is defined and item.enable == "local" and item.legacy is defined and item.legacy
+
+- name: configure global extensions 3/3
+  lineinfile:
+    dest={{ MW_WIKIFARM_CONFIG_DIRECTORY }}/LocalExtensions.php
+    line="\n{{ item.config }}"
+  with_items: "{{ EXTENSIONS }}"
+  when: item.enable is defined and item.enable == "local" and item.config is defined

@@ -1,0 +1,48 @@
+- name: create root directory
+  file:
+    state=directory
+    path={{ ROOT_DIRECTORY }}
+    mode=0775
+    owner=root
+    group=root
+
+- name: create backup directory
+  file:
+    state=directory
+    path={{ CLONE_DIRECTORY }}
+    mode=0775
+    owner=root
+    group=root
+
+- name: create certificate directory
+  file:
+    state=directory
+    path={{ CERT_DIRECTORY }}
+    mode=0700
+    owner=root
+    group=root
+
+- name: create Apache directory hierarchy
+  file:
+    state=directory
+    path={{ item }}
+    mode=2775
+    owner=apache
+    group=apache
+  with_items:
+    - "{{ APACHE_DIRECTORY }}"
+    - "{{ APACHE_CONF_DIRECTORY }}"
+    - "{{ APACHE_INSTANCE_DIRECTORY }}"
+    - "{{ APACHE_HTML_DIRECTORY }}"
+    - "{{ APACHE_REDIRECT_DIRECTORY }}"
+
+- name: create MediaWiki directory
+  file:
+    state=directory
+    path={{ item }}
+    mode=2775
+    owner=apache
+    group=apache
+  with_items:
+    - "{{ MW_DIRECTORY }}"
+    - "{{ MW_INSTANCE_DIRECTORY }}"

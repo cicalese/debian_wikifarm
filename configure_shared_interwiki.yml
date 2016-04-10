@@ -1,0 +1,28 @@
+- name: Configure shared interwiki table
+
+  hosts: db_hosts
+
+  tasks:
+    - name: remove interwiki schema from database if it already exists
+      mysql_db:
+        name={{ SHARED_WIKI_DB_NAME }}
+        login_user=root
+        login_password={{ MYSQL_ROOT_PASSWORD }}
+        state=absent
+
+    - name: create new interwiki schema
+      mysql_db:
+        name={{ SHARED_WIKI_DB_NAME }}
+        login_user=root
+        login_password={{ MYSQL_ROOT_PASSWORD }}
+        state=present
+
+    - name: copy empty wiki interwiki table to new interwiki schema
+      shell: mysqldump {{ EMPTY_WIKI_NAME }} interwiki -u root --password={{ MYSQL_ROOT_PASSWORD }} | mysql {{ SHARED_WIKI_DB_NAME }} -u root --password={{ MYSQL_ROOT_PASSWORD }}
+
+- name: Copy interwiki configuration file
+
+  hosts: mw_hosts
+
+  roles:
+    - configure_shared_interwiki_on_mw_host

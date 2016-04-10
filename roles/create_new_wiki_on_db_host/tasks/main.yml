@@ -1,0 +1,32 @@
+- name: grant access to empty wiki to wiki user (db host != wiki host)
+  mysql_user:
+    name={{ MYSQL_WIKI_USER }}
+    password={{ MYSQL_WIKI_PASSWORD }}
+    priv="{{ WIKI_NAME }}.*:SELECT,INSERT,UPDATE,DELETE,INDEX,ALTER,CREATE,DROP,CREATE TEMPORARY TABLES"
+    append_privs=true
+    host={{ MW_HOST }}
+    login_user=root
+    login_password={{ MYSQL_ROOT_PASSWORD }}
+  when: inventory_hostname != MW_HOST
+
+- name: grant access to empty wiki to wiki user (db host == wiki host)
+  mysql_user:
+    name={{ MYSQL_WIKI_USER }}
+    password={{ MYSQL_WIKI_PASSWORD }}
+    priv="{{ WIKI_NAME }}.*:SELECT,INSERT,UPDATE,DELETE,INDEX,ALTER,CREATE,DROP,CREATE TEMPORARY TABLES"
+    append_privs=true
+    host=localhost
+    login_user=root
+    login_password={{ MYSQL_ROOT_PASSWORD }}
+  when: inventory_hostname == MW_HOST
+
+
+- name: create new wiki schema
+  mysql_db:
+    name={{ WIKI_NAME }}
+    login_user=root
+    login_password={{ MYSQL_ROOT_PASSWORD }}
+    state=present
+
+- name: copy empty wiki schema to new wiki schema
+  shell: mysqldump {{ EMPTY_WIKI_NAME }} -u root --password={{ MYSQL_ROOT_PASSWORD }} | mysql {{ WIKI_NAME }} -u root --password={{ MYSQL_ROOT_PASSWORD }}

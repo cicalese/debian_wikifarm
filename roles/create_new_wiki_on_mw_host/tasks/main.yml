@@ -1,0 +1,32 @@
+- name: create wiki Apache configuration file
+  template:
+    src=wiki.conf.j2
+    dest={{ APACHE_INSTANCE_DIRECTORY }}/{{ WIKI_NAME }}.conf
+    mode=0644
+    owner=apache
+    group=apache
+
+- name: restore Apache file context
+  shell: restorecon -Rv {{ APACHE_DIRECTORY }}
+
+- name: restart Apache
+  service:
+    name=httpd
+    state=restarted
+
+- name: create instance directories
+  file:
+    path={{ item }}
+    state=directory
+    owner=apache
+    group=apache
+    mode=2755
+  with_items:
+    - "{{ MW_INSTANCE_DIRECTORY }}/{{ WIKI_NAME }}/branding"
+    - "{{ MW_INSTANCE_DIRECTORY }}/{{ WIKI_NAME }}/images"
+    - "{{ MW_INSTANCE_DIRECTORY }}/{{ WIKI_NAME }}/images/temp"
+    - "{{ MW_INSTANCE_DIRECTORY }}/{{ WIKI_NAME }}/images/thumb"
+
+- name: run update maintenance script on new wiki
+  shell: WIKI_NAME={{ WIKI_NAME }} php maintenance/update.php --quick
+    chdir={{ MW_CODE_DIRECTORY }}

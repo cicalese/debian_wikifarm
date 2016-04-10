@@ -1,0 +1,8 @@
+- name: Deploy DB hosts
+
+  hosts: db_hosts
+
+  roles:
+    - deploy_db_host
+
+  environment: "{{ PROXY_ENV | default({}) }}"

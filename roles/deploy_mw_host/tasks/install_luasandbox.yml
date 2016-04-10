@@ -1,0 +1,26 @@
+- name: install lua packages
+  yum:
+    name={{ item }}
+    state=latest
+  with_items:
+    - php-devel
+    - lua
+    - lua-devel
+
+- name: check out luasandbox from git
+  git:
+    repo={{ WMF_GIT_URL_ROOT}}/php/luasandbox.git
+    dest=/usr/src/luasandbox
+    version=master
+
+- name: compile and install luasandbox
+  shell: phpize && ./configure --prefix=/usr/lib64/php && make all install
+  args:
+    chdir: /usr/src/luasandbox
+
+- name: copy luasandbox initialization file
+  copy:
+    src=luasandbox.ini
+    dest=/etc/php.d/luasandbox.ini
+    mode=0600
+    owner=root

@@ -1,0 +1,8 @@
+- name: Deploy MediaWiki hosts
+
+  hosts: mw_hosts
+
+  roles:
+    - deploy_mw_host
+
+  environment: "{{ PROXY_ENV | default({}) }}"

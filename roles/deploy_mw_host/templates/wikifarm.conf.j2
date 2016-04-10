@@ -1,0 +1,15 @@
+SetEnvIf Request_URI "^/([^/]+)" WIKI_NAME=$1
+
+<Directory "{{ MW_INSTANCE_DIRECTORY }}/*/images">
+  Require all denied
+</Directory>
+<Directory "{{ MW_DIRECTORY }}/mediawiki*/images">
+  Require all denied
+</Directory>
+<Directory "{{ MW_DIRECTORY }}/mediawiki*/mw-config">
+  Require all denied
+</Directory>
+
+Include {{ APACHE_CONF_DIRECTORY }}/optional.conf
+Include {{ APACHE_CONF_DIRECTORY }}/http_redirect.conf
+Include {{ APACHE_INSTANCE_DIRECTORY }}/*.conf

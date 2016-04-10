@@ -1,0 +1,24 @@
+- name: copy configuration files
+  copy:
+    src={{ item }}
+    dest={{ MW_WIKIFARM_CONFIG_DIRECTORY }}/{{ item }}
+    force=no
+    mode=644
+    owner=apache
+    group=apache
+  with_items:
+    - Skins.php
+
+- name: check out skins from git
+  git:
+    repo={{ item.url }}
+    dest={{ MW_CODE_DIRECTORY }}/skins/{{ item.name }}
+    version={{ item.version }}
+  with_items: "{{ SKINS }}"
+
+- name: configure skins
+  lineinfile:
+    dest={{ MW_WIKIFARM_CONFIG_DIRECTORY }}/Skins.php
+    regexp="wfLoadSkin\(\s*['\"]{{ item.name }}['\"]"
+    line="wfLoadSkin( '{{ item.name }}' );"
+  with_items: "{{ SKINS }}"

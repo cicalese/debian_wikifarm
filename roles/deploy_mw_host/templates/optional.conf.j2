@@ -1,0 +1,39 @@
+RewriteCond %{REQUEST_METHOD} ^(TRACE|TRACK|HEAD|DELETE)
+RewriteRule .* - [F]
+
+<Directory "{{ APACHE_HTML_DIRECTORY }}">
+  <IfModule mod_expires.c>
+     ExpiresActive On
+     ExpiresDefault "access plus 1 hour"
+     ExpiresByType text/html "access plus 1 day"
+     ExpiresByType image/gif "access plus 1 week"
+     ExpiresByType image/jpeg "access plus 1 week"
+     ExpiresByType image/png "access plus 1 week"
+     ExpiresByType text/css "access plus 1 week"
+     ExpiresByType text/javascript "access plus 1 week"
+     ExpiresByType application/x-javascript "access plus 1 week"
+     ExpiresByType text/xml "access plus 1 day"
+     ExpiresByType image/x-icon "access plus 1 month"
+     ExpiresByType image/ico "access plus 1 month"
+     ExpiresByType image/icon "access plus 1 month"
+  </IfModule>
+</Directory>
+
+<Location />
+  <IfModule mod_deflate.c>
+    # compress content with type html, text, and css
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css
+    # compress content with type  javascript
+    AddOutputFilterByType DEFLATE application/x-javascript application/javascript text/javascript text/x-js text/x-javascript
+    # Incase the mime type is mot set correctlly
+    AddOutputFilter DEFLATE js css htm html xml
+    <IfModule mod_headers.c>
+      # properly handle requests coming from behind proxies
+      Header append Vary User-Agent
+    </IfModule>
+  </IfModule>
+</Location>
+
+FileETag MTime Size
+
+Header set X-Frame-Options SAMEORIGIN

@@ -1,0 +1,14 @@
+- name: edit php configuration file 1/2
+  lineinfile:
+    dest=/etc/php.ini
+    regexp="^;?memory_limit\s*="
+    line="memory_limit = {{ PHP_MEMORY_LIMIT }}"
+    backup=yes
+  when: PHP_MEMORY_LIMIT is defined
+
+- name: edit php configuration file 2/2
+  lineinfile:
+    dest=/etc/php.ini
+    regexp="^;?session\.gc_maxlifetime\s*="
+    line="session.gc_maxlifetime = {{ PHP_SESSION_GC_MAXLIFETIME }}"
+  when: PHP_SESSION_GC_MAXLIFETIME is defined

@@ -1,0 +1,18 @@
+<?php
+
+echo '<h2>' . gethostname() . ' Wiki Directory</h2>';
+$dir = '{{ APACHE_INSTANCE_DIRECTORY }}';
+$files = scandir($dir);
+if ($files && $files != array()) {
+  echo '<ul>';
+  foreach ($files as $file) {
+    $index = stripos($file, '.conf');
+    if ($index !== false) {
+      $wiki = substr($file, 0, $index);
+      echo '<li>';
+      echo '<a href = "/' . $wiki . '" target="_blank">' . $wiki . '</a>';
+      echo '</li>';
+    }
+  }
+  echo '</ul>';
+}

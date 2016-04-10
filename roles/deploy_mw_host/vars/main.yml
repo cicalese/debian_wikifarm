@@ -1,0 +1,23 @@
+REMI_PACKAGES:
+    - mysql
+
+PACKAGES:
+    - libselinux-python
+    - policycoreutils-python
+    - gcc
+    - openssl-devel
+    - libcurl-devel
+    - gettext
+    - expat-devel
+    - perl-ExtUtils-MakeMaker
+    - php
+    - php-ldap
+    - php-mbstring
+    - php-xml
+    - php-pecl-apcu
+    - php-mysqlnd
+    - php-pear-Mail
+    - MySQL-python
+    - httpd
+    - ImageMagick
+    - squid

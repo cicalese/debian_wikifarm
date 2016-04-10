@@ -1,0 +1,8 @@
+- name: Install MediWiki
+
+  hosts: mw_hosts
+
+  roles:
+    - install_mediawiki
+
+  environment: "{{ PROXY_ENV | default({}) }}"

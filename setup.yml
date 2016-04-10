@@ -1,0 +1,10 @@
+# Set up remote host for ansible installation
+
+- name: Set up remote host for ansible installation
+
+  hosts: all
+
+  roles:
+   - setup
+
+  environment: "{{ PROXY_ENV | default({}) }}"

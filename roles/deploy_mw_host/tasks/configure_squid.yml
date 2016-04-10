@@ -1,0 +1,38 @@
+- name: add firewall rule
+  shell: iptables -I INPUT -p tcp --dport {{ SQUID_LISTEN_PORT }} -j ACCEPT
+
+- name: save firewall rule
+  shell: service iptables save
+
+- name: copy cert private key
+  copy:
+    src=certs/{{ inventory_hostname }}-private.key
+    dest={{ CERT_DIRECTORY }}/private.key
+    mode=0600
+    owner=root
+
+- name: copy cert
+  copy:
+    src=certs/{{ inventory_hostname }}-site.crt
+    dest={{ CERT_DIRECTORY }}/site.crt
+    mode=0600
+    owner=root
+
+- name: edit Squid configuration file
+  template:
+    src=squid.conf.j2
+    dest=/etc/squid/squid.conf
+    backup=yes
+  when: SQUID_HOSTNAME is defined
+
+- name: configure Squid to start at boot
+  service:
+    name=squid
+    enabled=yes
+  when: SQUID_HOSTNAME is defined
+
+- name:  restart Squid
+  service:
+    name=squid
+    state=restarted
+  when: SQUID_HOSTNAME is defined
