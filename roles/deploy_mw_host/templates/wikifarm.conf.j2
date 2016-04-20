@@ -21,11 +21,11 @@ SetEnvIf Request_URI "^/([^/]+)" WIKI_NAME=$1
 Include {{ APACHE_CONF_DIRECTORY }}/optional.conf
 Include {{ APACHE_CONF_DIRECTORY }}/http_redirect.conf
 
-{% if (ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux') and ansible_distribution_major_version == '6' %}
+{% if (ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat') and ansible_distribution_major_version == '6' %}
 
 Include {{ APACHE_INSTANCE_DIRECTORY }}/*.conf
 
-{% elif (ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux') and ansible_distribution_major_version == '7' %}
+{% elif (ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat') and ansible_distribution_major_version == '7' %}
 
 IncludeOptional {{ APACHE_INSTANCE_DIRECTORY }}/*.conf
 

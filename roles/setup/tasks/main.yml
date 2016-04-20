@@ -8,54 +8,54 @@
   yum:
     name=iptables-services
     state=latest
-  when: (ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux') and ansible_distribution_major_version == '7'
+  when: (ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat') and ansible_distribution_major_version == '7'
 
 - name: install iptables if CentOS/RHEL 7 (2/3)
   shell: systemctl enable iptables
-  when: (ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux') and ansible_distribution_major_version == '7'
+  when: (ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat') and ansible_distribution_major_version == '7'
 
 - name: install iptables if CentOS/RHEL 7 (3/3)
   shell: systemctl start iptables
-  when: (ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux') and ansible_distribution_major_version == '7'
+  when: (ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat') and ansible_distribution_major_version == '7'
 
 - name: add MySQL repo (1/2)
   get_url:
     url=http://repo.mysql.com/mysql-community-release-el{{ ansible_distribution_major_version }}.rpm
     dest=/root/mysql-community-release-el{{ ansible_distribution_major_version }}.rpm
     validate_certs={{ VALIDATE_CERTS }}
-  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
 
 - name: add MySQL repo (2/2)
   shell: rpm -Uvh mysql-community-release-el{{ ansible_distribution_major_version }}.rpm
   args:
     chdir: /root
   ignore_errors: true
-  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
 
 - name: add epel repo (1/2)
   get_url:
     url=https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm
     dest=/root/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm
     validate_certs={{ VALIDATE_CERTS }}
-  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
 
 - name: add epel repo (2/2)
   shell: rpm -Uvh epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm
   args:
     chdir: /root
   ignore_errors: true
-  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
 
 - name: get remi repo
   get_url:
     url=http://rpms.remirepo.net/enterprise/remi.repo
     dest=/etc/yum.repos.d
     validate_certs={{ VALIDATE_CERTS }}
-  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
 
 - name: enable remi repo
   shell: yum-config-manager --enable remi-php55
-  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
 
 - name: copy public key
   authorized_key:
