@@ -1,6 +1,3 @@
-REMI_PACKAGES:
-    - mysql
-
 PACKAGES:
     - libselinux-python
     - policycoreutils-python
@@ -17,6 +14,7 @@ PACKAGES:
     - php-pecl-apcu
     - php-mysqlnd
     - php-pear-Mail
+    - mysql
     - MySQL-python
     - httpd
     - ImageMagick

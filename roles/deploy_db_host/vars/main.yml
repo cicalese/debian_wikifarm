@@ -1,7 +1,5 @@
-REMI_PACKAGES:
-    - mysql-server
-
 PACKAGES:
     - libselinux-python
     - policycoreutils-python
+    - mysql-server
     - MySQL-python

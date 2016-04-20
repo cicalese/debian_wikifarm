@@ -1,0 +1,58 @@
+cache_mgr root
+visible_hostname {{ SQUID_HOSTNAME }}
+https_port {{ SQUID_LISTEN_ADDRESS }} cert={{ CERT_DIRECTORY }}/site.crt key={{ CERT_DIRECTORY }}/private.key defaultsite={{ SQUID_HOSTNAME }} vhost
+http_port {{ PURGE_LISTEN_ADDRESS }}  defaultsite={{ SQUID_HOSTNAME }} vhost
+cache_peer 127.0.0.1 parent {{ APACHE_LISTEN_PORT }} 0 no-query originserver no-digest login=PASS
+
+cache_dir ufs /var/spool/squid 10000 16 256
+cache_mem 256 MB
+maximum_object_size_in_memory 256 KB
+logformat combined %>a %ui %un [%tl] "%rm %ru HTTP/%rv" %>Hs %<st "%{Referer}>h" "%{User-Agent}>h" %Ss:%Sh
+
+access_log /var/log/squid/access.log combined
+
+cache_log /var/log/squid/cache.log
+cache_store_log /var/log/squid/store.log
+#logfile_rotate 10
+## put this in crontab to rotate logs at midnight:
+## 0 0 * * * /usr/sbin/squid -k rotate &> /dev/null
+
+acl manager proto cache_object
+acl localhost src 127.0.0.1/32 ::1
+acl to_localhost dst 127.0.0.0/8 0.0.0.0/32 ::1
+acl Safe_ports port 443
+acl SSL_ports port 443
+acl PURGE method PURGE
+acl CONNECT method CONNECT
+
+http_access allow manager localhost
+http_access deny manager
+
+http_access allow PURGE localhost
+http_access deny PURGE
+
+http_access deny !Safe_ports
+
+http_access deny CONNECT !SSL_ports
+
+http_access allow all
+http_reply_access allow all
+icp_access allow all
+
+cache_effective_group squid
+coredump_dir /var/spool/squid
+
+forwarded_for on
+
+emulate_httpd_log on
+
+redirect_rewrites_host_header off
+
+buffered_logs on
+
+# Do not cache cgi-bin, ? urls, posts, etc.
+hierarchy_stoplist cgi-bin ?
+acl QUERY urlpath_regex cgi-bin \?
+acl POST method POST
+no_cache deny QUERY
+no_cache deny POST

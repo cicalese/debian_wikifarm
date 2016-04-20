@@ -230,7 +230,6 @@
       - name: "DynamicPageList"
         url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}/DynamicPageList.git"
         version: "{{ MW_RELEASE }}"
-        legacy: true
 
       - name: "InputBox"
         url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}/InputBox.git"
@@ -275,9 +274,11 @@
       - name: "CustomNavBlocks"
         url: "https://github.com/mathiasertl/CustomNavBlocks.git"
         version: master
-        legacy: true
+
+      - name: "SimpleTooltip"
+        url: "https://github.com/Fannon/SimpleTooltip.git"
+        version: master
 
       - name: "Piwik"
         url: "https://github.com/DaSchTour/piwik-mediawiki-extension.git"
         version: master
-        legacy: true

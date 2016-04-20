@@ -1,5 +1,13 @@
 SetEnvIf Request_URI "^/([^/]+)" WIKI_NAME=$1
 
+<Directory "{{ MW_DIRECTORY }}/mediawiki*">
+  <IfVersion < 2.4>
+    Allow from all
+  </IfVersion>
+  <IfVersion >= 2.4>
+    Require all granted
+  </IfVersion>
+</Directory>
 <Directory "{{ MW_INSTANCE_DIRECTORY }}/*/images">
   Require all denied
 </Directory>
@@ -12,4 +20,13 @@ SetEnvIf Request_URI "^/([^/]+)" WIKI_NAME=$1
 
 Include {{ APACHE_CONF_DIRECTORY }}/optional.conf
 Include {{ APACHE_CONF_DIRECTORY }}/http_redirect.conf
+
+{% if (ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux') and ansible_distribution_major_version == '6' %}
+
 Include {{ APACHE_INSTANCE_DIRECTORY }}/*.conf
+
+{% elif (ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux') and ansible_distribution_major_version == '7' %}
+
+IncludeOptional {{ APACHE_INSTANCE_DIRECTORY }}/*.conf
+
+{% endif %}
