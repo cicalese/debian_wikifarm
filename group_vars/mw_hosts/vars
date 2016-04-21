@@ -34,14 +34,16 @@ WIKI_URL: https://{{ inventory_hostname }}
 WIKI_IP_ADDRESS: "{{ ansible_default_ipv4.address }}"
 
 MW_GIT_URL_ROOT: "http://git.wikimedia.org/git/mediawiki"
-#MW_GIT_URL_ROOT: "https://github.com/wikimedia/mediawiki"
-
 MW_GIT_URL: "{{ MW_GIT_URL_ROOT }}/core.git"
-#MW_GIT_URL: "{{ MW_GIT_URL_ROOT }}.git"
-
 MW_EXTENSIONS_GIT_URL_ROOT: "{{ MW_GIT_URL_ROOT }}/extensions/"
-#MW_EXTENSIONS_GIT_URL_ROOT: "{{ MW_GIT_URL_ROOT }}-extensions-"
-
 MW_SKINS_GIT_URL_ROOT: "{{ MW_GIT_URL_ROOT }}/skins/"
-#MW_SKINS_GIT_URL_ROOT: "{{ MW_GIT_URL_ROOT }}-skins-"
+MW_LUASANDBOX_GIT_URL: "{{ MW_GIT_URL_ROOT }}/php/luasandbox.git"
 
+# To get the code from the github.com mirror rather than the Wikimedia
+# Foundation repository, comment out the five lines above and uncomment the
+# five lines below.
+#MW_GIT_URL_ROOT: "https://github.com/wikimedia/mediawiki"
+#MW_GIT_URL: "{{ MW_GIT_URL_ROOT }}.git"
+#MW_EXTENSIONS_GIT_URL_ROOT: "{{ MW_GIT_URL_ROOT }}-extensions-"
+#MW_SKINS_GIT_URL_ROOT: "{{ MW_GIT_URL_ROOT }}-skins-"
+#MW_LUASANDBOX_GIT_URL: "{{ MW_GIT_URL_ROOT }}-php-luasandbox.git"
