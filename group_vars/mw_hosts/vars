@@ -33,6 +33,15 @@ WIKI_ADMIN_USER: administrator
 WIKI_URL: https://{{ inventory_hostname }}
 WIKI_IP_ADDRESS: "{{ ansible_default_ipv4.address }}"
 
-WMF_GIT_URL_ROOT: "http://git.wikimedia.org/git/mediawiki"
+MW_GIT_URL_ROOT: "http://git.wikimedia.org/git/mediawiki"
+#MW_GIT_URL_ROOT: "https://github.com/wikimedia/mediawiki"
 
-MW_GIT_URL: "{{ WMF_GIT_URL_ROOT }}/core.git"
+MW_GIT_URL: "{{ MW_GIT_URL_ROOT }}/core.git"
+#MW_GIT_URL: "{{ MW_GIT_URL_ROOT }}.git"
+
+MW_EXTENSIONS_GIT_URL_ROOT: "{{ MW_GIT_URL_ROOT }}/extensions/"
+#MW_EXTENSIONS_GIT_URL_ROOT: "{{ MW_GIT_URL_ROOT }}-extensions-"
+
+MW_SKINS_GIT_URL_ROOT: "{{ MW_GIT_URL_ROOT }}/skins/"
+#MW_SKINS_GIT_URL_ROOT: "{{ MW_GIT_URL_ROOT }}-skins-"
+

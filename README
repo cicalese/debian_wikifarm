@@ -11,8 +11,8 @@ is self-contained, supporting migration between similarly configured hosts.
 
 The wikis hosted by the wiki farms built by these playbooks will be accessed
 over HTTPS with a permanenent redirect to HTTPS if accessed over HTTP. These
-playbooks have been tested using ansible 2.0.1.0 to provision CentOS 6.7 and
-RedHat 6.7 targets.
+playbooks have been tested using ansible 2.0.1.0 to provision CentOS/RedHat 6
+and 7 targets.
 
 Each wiki on a wiki family has an instance directory in the INSTANCES
 directory that is a sibling the the MediaWiki directory. The instance directory
@@ -86,6 +86,13 @@ CONFIGURATION NOTES:
 
 * There are also some other default values in group_vars/all/vars that you may
   want to change to match your environment.
+
+* By default, MediaWiki and many of its extensions are installed from the
+  Wikimedia Foundation git repository. However, in some cases dowloads of
+  large code bases from that repository through a firewall can stall, so the
+  "group_vars/mw_hosts/vars" file contains alternative URLs that are commented
+  out to install from the github.com mirror. To switch to use the mirror,
+  comment out the wikimedia URLs and uncomment the github URLs.
 
 * For each MediaWiki host, a certificate and private key must be provided in an
   ansible-accessible diretory named certs on the ansible host. The files in that

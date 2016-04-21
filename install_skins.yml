@@ -9,12 +9,10 @@
 
   vars:
 
-    MW_SKINS_GIT_URL_ROOT: "{{ WMF_GIT_URL_ROOT }}/skins"
-
     SKINS:
 
       - name: "Vector"
-        url: "{{ MW_SKINS_GIT_URL_ROOT }}/Vector.git"
+        url: "{{ MW_SKINS_GIT_URL_ROOT }}Vector.git"
         version: "{{ MW_RELEASE }}"
 
       - name: "foreground"
