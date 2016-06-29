@@ -20,7 +20,7 @@
   git:
     repo={{ item.url }}
     dest={{ MW_CODE_RELEASE_DIRECTORY }}/extensions/{{ item.name }}
-    version={{ item.version }}
+    version={{ item.version | default(MW_RELEASE) }}
     accept_hostkey=yes
   with_items: "{{ EXTENSIONS }}"
   when: item.url is defined

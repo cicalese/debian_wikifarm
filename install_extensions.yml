@@ -3,7 +3,7 @@
   hosts: mw_hosts
 
   roles:
-    - install_mw_extensions
+    - install_extensions
 
   environment: "{{ PROXY_ENV | default({}) }}"
 

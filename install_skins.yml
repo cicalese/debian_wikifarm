@@ -17,4 +17,4 @@
 
       - name: "foreground"
         url: https://github.com/thingles/foreground.git
-        version: develop
+        version: master

@@ -16,7 +16,6 @@ DEFAULT_EXTENSIONS:
 
   - name: "Semantic Extra Special Properties"
     composer: "mediawiki/semantic-extra-special-properties"
-    version: "dev-master"
     config: |
       $sespSpecialProperties[] = '_EUSER';
       $sespSpecialProperties[] = '_CUSER';
@@ -48,7 +47,6 @@ DEFAULT_EXTENSIONS:
 
   - name: "WikiEditor"
     url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}WikiEditor.git"
-    version: "{{ MW_RELEASE }}"
     enable: global
     config: |
       $wgDefaultUserOptions['usebetatoolbar'] = 1;
@@ -57,35 +55,29 @@ DEFAULT_EXTENSIONS:
 
   - name: "CodeEditor"
     url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}CodeEditor.git"
-    version: "{{ MW_RELEASE }}"
     enable: global
 
   - name: "ParserFunctions"
     url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}ParserFunctions.git"
-    version: "{{ MW_RELEASE }}"
     enable: global
     config: |
       $wgPFEnableStringFunctions = true;
 
   - name: "Cite"
     url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}Cite.git"
-    version: "{{ MW_RELEASE }}"
     enable: global
 
   - name: "HitCounters"
     url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}HitCounters.git"
-    version: "{{ MW_RELEASE }}"
     enable: global
 
   - name: "SyntaxHighlight_GeSHi"
     url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}SyntaxHighlight_GeSHi.git"
-    version: "{{ MW_RELEASE }}"
     enable: global
     composer_update: true
 
   - name: "Scribunto"
     url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}Scribunto.git"
-    version: "{{ MW_RELEASE }}"
     legacy: true
     enable: global
     config: |
@@ -95,13 +87,11 @@ DEFAULT_EXTENSIONS:
 
   - name: "Arrays"
     url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}Arrays.git"
-    version: "{{ MW_RELEASE }}"
     legacy: true
     enable: global
 
   - name: "HeaderTabs"
     url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}HeaderTabs.git"
-    version: "{{ MW_RELEASE }}"
     legacy: true
     enable: global
     config: |
@@ -110,49 +100,41 @@ DEFAULT_EXTENSIONS:
 
   - name: "Variables"
     url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}Variables.git"
-    version: "{{ MW_RELEASE }}"
     legacy: true
     enable: global
 
   - name: "DataTransfer"
     url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}DataTransfer.git"
-    version: "{{ MW_RELEASE }}"
     legacy: true
     enable: global
 
   - name: "ReplaceText"
     url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}ReplaceText.git"
-    version: "{{ MW_RELEASE }}"
     legacy: true
     enable: global
 
   - name: "ExternalData"
     url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}ExternalData.git"
-    version: "{{ MW_RELEASE }}"
     legacy: true
     enable: global
 
   - name: "PipeEscape"
     url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}PipeEscape.git"
-    version: "{{ MW_RELEASE }}"
     legacy: true
     enable: global
 
   - name: "UrlGetParameters"
     url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}UrlGetParameters.git"
-    version: "{{ MW_RELEASE }}"
     legacy: true
     enable: global
 
   - name: "MagicNoCache"
     url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}MagicNoCache.git"
-    version: "{{ MW_RELEASE }}"
     legacy: true
     enable: global
 
   - name: "Widgets"
     url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}Widgets.git"
-    version: "{{ MW_RELEASE }}"
     legacy: true
     submodule: true
     enable: global
@@ -224,11 +206,9 @@ DEFAULT_EXTENSIONS:
 
   - name: "DynamicPageList"
     url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}DynamicPageList.git"
-    version: "{{ MW_RELEASE }}"
 
   - name: "InputBox"
     url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}InputBox.git"
-    version: "{{ MW_RELEASE }}"
 
   - name: "WhosOnline"
     url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}WhosOnline.git"
@@ -256,11 +236,9 @@ DEFAULT_EXTENSIONS:
 
   - name: "LdapAuthentication"
     url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}LdapAuthentication.git"
-    version: "{{ MW_RELEASE }}"
 
   - name: "LDAPAuthorization"
     url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}LDAPAuthorization.git"
-    version: "{{ MW_RELEASE }}"
 
   - name: "Cargo"
     url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}Cargo.git"

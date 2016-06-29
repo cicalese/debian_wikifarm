@@ -112,13 +112,14 @@ CONFIGURATION NOTES:
   * To place MySQL/Apache/MediaWiki all on <host1>, add <host1> to
     db_hosts and mw_hosts
 
-* The install_mw_extensions.yml playbook comes preconfigured with a set of
+* The group_vars/all/default_extensions file comes preconfigured with a set of
   useful extensions. This serves as a starting point as well as an example
   of how extensions can be specified. This list of extensions can eaily be
-  moved out of the playbook file into a separate variable file, but it is
-  included in the playbook for now so it is easy to find the extension
-  definitions. Each extension in the list contains the following fields
-  (the url and composer fields must not both be used for the same extension):
+  edited or replaced to specify a different set of extensions. The list of
+  extensions is placed in a variable, DEFAULT_EXTENSIONS, which is used by the
+  install_extensions.yml playbook. Each extension in the list contains the
+  following fields (the url and composer fields must not both be used for the
+  same extension):
 
   * name: the name of the extension used to identify the extension directory
     and to register the extension (not used for composer loading)
@@ -193,7 +194,7 @@ PLAYBOOK INSTRUCTIONS:
       or
     ansible-playbook install_mediawiki.yml -e "MW_RELEASE=REL1_26 DB_HOST=<dbhost>"
 
-    ansible-playbook install_mw_extensions.yml -e "MW_RELEASE=REL1_26"
+    ansible-playbook install_extensions.yml -e "MW_RELEASE=REL1_26"
     ansible-playbook install_skins.yml -e "MW_RELEASE=REL1_26"
 
   If you want to have a shared interwiki table:
@@ -260,7 +261,7 @@ interwiki table, and to create a wiki named "testwiki", do the following:
   ansible-playbook add_db_client.yml -e "MW_HOST=mw1 SHARED_WIKI_DB_NAME=SHARED_WIKI_TABLES" -l db1
   ansible-playbook deploy_mw_hosts.yml
   ansible-playbook install_mediawiki.yml -e "MW_RELEASE=REL1_26 DB_HOST=db1"
-  ansible-playbook install_mw_extensions.yml -e "MW_RELEASE=REL1_26"
+  ansible-playbook install_extensions.yml -e "MW_RELEASE=REL1_26"
   ansible-playbook install_skins.yml -e "MW_RELEASE=REL1_26"
   ansible-playbook configure_shared_interwiki.yml -e "MW_RELEASE=REL1_26 SHARED_WIKI_DB_NAME=SHARED_WIKI_TABLES"
   ansible-playbook create_new_wiki.yml -e "MW_HOST=mw1 DB_HOST=db1 WIKI_NAME=testwiki"
