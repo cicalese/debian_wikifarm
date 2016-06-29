@@ -1,0 +1,5 @@
+# If you need to use a proxy, uncomment and edit the lines below
+
+#PROXY_ENV:
+#    http_proxy: http://myproxy
+#    https_proxy: http://myproxy

@@ -78,19 +78,19 @@ CONFIGURATION NOTES:
   ansible-playbook command line or may be defined in an ansible variable file
   or ansible vault. The latter would require additional parameters (such as
   --ask-vault-pass or --vault-password-file) to be added to the commands
-  below. By default, a file "group_vars/all/vars" has been provided with dummy
+  below. By default, a file "group_vars/all/config" has been provided with dummy
   values for these variables that must be changed.
 
 * If you need to use specify a proxy, uncomment the PROXY_ENV lines in
-  group_vars/all/vars and set them appropriately.
+  group_vars/all/proxy and set them appropriately.
 
-* There are also some other default values in group_vars/all/vars that you may
+* There are also some other default values in group_vars/all/config that you may
   want to change to match your environment.
 
 * By default, MediaWiki and many of its extensions are installed from the
   Wikimedia Foundation git repository. However, in some cases dowloads of
   large code bases from that repository through a firewall can stall, so the
-  "group_vars/mw_hosts/vars" file contains alternative URLs that are commented
+  "group_vars/mw_hosts/config" file contains alternative URLs that are commented
   out to install from the github.com mirror. To switch to use the mirror,
   comment out the wikimedia URLs and uncomment the github URLs.
 

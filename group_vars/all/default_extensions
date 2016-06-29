@@ -1,0 +1,279 @@
+DEFAULT_EXTENSIONS:
+
+  - name: "Semantic MediaWiki"
+    composer: "mediawiki/semantic-media-wiki"
+    version: "dev-master#a0633e3a3546edd21d1b0e049b3857141f6214bf"
+    config: |
+      enableSemantics($wgSitename);
+      $smwgLinksInValues = true;
+      $smwgPageSpecialProperties = array( '_MDAT', '_CDAT' );
+
+  - name: "Semantic Result Formats"
+    composer: "mediawiki/semantic-result-formats"
+    version: "dev-master#5db0a1a"
+    config: |
+      $srfgFormats[] = 'tagcloud';
+
+  - name: "Semantic Extra Special Properties"
+    composer: "mediawiki/semantic-extra-special-properties"
+    version: "dev-master"
+    config: |
+      $sespSpecialProperties[] = '_EUSER';
+      $sespSpecialProperties[] = '_CUSER';
+      $sespSpecialProperties[] = '_VIEWS';
+
+  - name: "Maps"
+    composer: "mediawiki/maps"
+    version: "dev-master#e9763b4"
+
+  - name: "Semantic Maps"
+    composer: "mediawiki/semantic-maps"
+    version: "dev-master#4044cac46e4c8ff833f5000e977022d2580da838"
+
+  - name: "Lingo"
+    composer: "mediawiki/lingo"
+    version: "1.2.0"
+
+  - name: "SemanticGlossary"
+    composer: "mediawiki/semantic-glossary"
+    version: "1.1.0"
+
+  - name: "UserFunctions"
+    composer: "mediawiki/user-functions"
+    version: "dev-master#4527bee"
+
+  - name: "ImageMap"
+    composer: "mediawiki/image-map"
+    version: "dev-master#65fb633"
+
+  - name: "WikiEditor"
+    url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}WikiEditor.git"
+    version: "{{ MW_RELEASE }}"
+    enable: global
+    config: |
+      $wgDefaultUserOptions['usebetatoolbar'] = 1;
+      $wgDefaultUserOptions['usebetatoolbar-cgd'] = 1;
+      $wgDefaultUserOptions['wikieditor-preview'] = 1;
+
+  - name: "CodeEditor"
+    url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}CodeEditor.git"
+    version: "{{ MW_RELEASE }}"
+    enable: global
+
+  - name: "ParserFunctions"
+    url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}ParserFunctions.git"
+    version: "{{ MW_RELEASE }}"
+    enable: global
+    config: |
+      $wgPFEnableStringFunctions = true;
+
+  - name: "Cite"
+    url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}Cite.git"
+    version: "{{ MW_RELEASE }}"
+    enable: global
+
+  - name: "HitCounters"
+    url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}HitCounters.git"
+    version: "{{ MW_RELEASE }}"
+    enable: global
+
+  - name: "SyntaxHighlight_GeSHi"
+    url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}SyntaxHighlight_GeSHi.git"
+    version: "{{ MW_RELEASE }}"
+    enable: global
+    composer_update: true
+
+  - name: "Scribunto"
+    url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}Scribunto.git"
+    version: "{{ MW_RELEASE }}"
+    legacy: true
+    enable: global
+    config: |
+      $wgScribuntoDefaultEngine = 'luasandbox';
+      $wgScribuntoUseGeSHi = true;
+      $wgScribuntoUseCodeEditor = true;
+
+  - name: "Arrays"
+    url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}Arrays.git"
+    version: "{{ MW_RELEASE }}"
+    legacy: true
+    enable: global
+
+  - name: "HeaderTabs"
+    url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}HeaderTabs.git"
+    version: "{{ MW_RELEASE }}"
+    legacy: true
+    enable: global
+    config: |
+      $htRenderSingleTab = true;
+      $htEditTabLink = false;
+
+  - name: "Variables"
+    url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}Variables.git"
+    version: "{{ MW_RELEASE }}"
+    legacy: true
+    enable: global
+
+  - name: "DataTransfer"
+    url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}DataTransfer.git"
+    version: "{{ MW_RELEASE }}"
+    legacy: true
+    enable: global
+
+  - name: "ReplaceText"
+    url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}ReplaceText.git"
+    version: "{{ MW_RELEASE }}"
+    legacy: true
+    enable: global
+
+  - name: "ExternalData"
+    url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}ExternalData.git"
+    version: "{{ MW_RELEASE }}"
+    legacy: true
+    enable: global
+
+  - name: "PipeEscape"
+    url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}PipeEscape.git"
+    version: "{{ MW_RELEASE }}"
+    legacy: true
+    enable: global
+
+  - name: "UrlGetParameters"
+    url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}UrlGetParameters.git"
+    version: "{{ MW_RELEASE }}"
+    legacy: true
+    enable: global
+
+  - name: "MagicNoCache"
+    url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}MagicNoCache.git"
+    version: "{{ MW_RELEASE }}"
+    legacy: true
+    enable: global
+
+  - name: "Widgets"
+    url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}Widgets.git"
+    version: "{{ MW_RELEASE }}"
+    legacy: true
+    submodule: true
+    enable: global
+
+  - name: "SimpleMathJax"
+    url: "https://github.com/jmnote/SimpleMathJax.git"
+    version: master
+    legacy: true
+    enable: global
+
+  - name: "SemanticForms"
+    url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}SemanticForms.git"
+    version: "0dae7d5e995f"
+    legacy: true
+    enable: global
+    config: |
+      $sfgRenameEditTabs=true;
+
+  - name: "SemanticRating"
+    url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}SemanticRating.git"
+    version: master
+    enable: global
+
+  - name: "TitleIcon"
+    url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}TitleIcon.git"
+    version: master
+    enable: global
+
+  - name: "HierarchyBuilder"
+    url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}HierarchyBuilder.git"
+    version: master
+    enable: global
+
+  - name: "SemanticTitle"
+    url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}SemanticTitle.git"
+    version: master
+    legacy: true
+    enable: global
+    config: |
+      $wgAllowDisplayTitle = true;
+      $wgRestrictDisplayTitle = false;
+
+  - name: "VIKI"
+    url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}VIKI.git"
+    version: master
+    enable: global
+    config: |
+      $wgRegisterInternalExternals = true;
+      $wgVIKI_Hidden_Categories = array('Framework Pages');
+      $wgVIKI_Second_Order_Links = true;
+
+  - name: "VikiTitleIcon"
+    url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}VikiTitleIcon.git"
+    version: master
+    enable: global
+
+  - name: "VikiSemanticTitle"
+    url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}VikiSemanticTitle.git"
+    version: master
+    enable: global
+
+  - name: "JSBreadCrumbs"
+    url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}JSBreadCrumbs.git"
+    version: master
+    legacy: true
+    config: |
+      $wgDefaultUserOptions['jsbreadcrumbs-showcrumbssidebar'] = true;
+    enable: global
+
+  - name: "DynamicPageList"
+    url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}DynamicPageList.git"
+    version: "{{ MW_RELEASE }}"
+
+  - name: "InputBox"
+    url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}InputBox.git"
+    version: "{{ MW_RELEASE }}"
+
+  - name: "WhosOnline"
+    url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}WhosOnline.git"
+    version: "master"
+
+  - name: "SafeDelete"
+    url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}SafeDelete.git"
+    version: master
+
+  - name: "SemanticDependency"
+    url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}SemanticDependency.git"
+    version: master
+
+  - name: "PluggableAuth"
+    url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}PluggableAuth.git"
+    version: master
+
+  - name: "OpenIDConnect"
+    url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}OpenIDConnect.git"
+    version: master
+
+  - name: "SimpleSAMLphp"
+    url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}SimpleSAMLphp.git"
+    version: master
+
+  - name: "LdapAuthentication"
+    url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}LdapAuthentication.git"
+    version: "{{ MW_RELEASE }}"
+
+  - name: "LDAPAuthorization"
+    url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}LDAPAuthorization.git"
+    version: "{{ MW_RELEASE }}"
+
+  - name: "Cargo"
+    url: "{{ MW_EXTENSIONS_GIT_URL_ROOT }}Cargo.git"
+    version: "b069a7e"
+
+  - name: "CustomNavBlocks"
+    url: "https://github.com/mathiasertl/CustomNavBlocks.git"
+    version: master
+
+  - name: "SimpleTooltip"
+    url: "https://github.com/Fannon/SimpleTooltip.git"
+    version: master
+
+  - name: "Piwik"
+    url: "https://github.com/DaSchTour/piwik-mediawiki-extension.git"
+    version: master

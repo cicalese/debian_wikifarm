@@ -1,16 +1,14 @@
 ROOT_DIRECTORY: /WIKIFARM
-
 CLONE_DIRECTORY: "{{ ROOT_DIRECTORY }}/CLONE"
 
-MYSQL_PORT: 3306
-MYSQL_WIKI_USER: wiki
+WIKI_ADMIN_PASSWORD: changeme
+
 MYSQL_ROOT_PASSWORD: changeme
 MYSQL_WIKI_PASSWORD: changeme
-WIKI_ADMIN_PASSWORD: changeme
+MYSQL_PORT: 3306
+MYSQL_WIKI_USER: wiki
+
 EMPTY_WIKI_NAME: emptywiki
 WIKI_EMAIL: no-reply@{{ inventory_hostname }}
 VALIDATE_CERTS: yes
-
-#PROXY_ENV:
-#    http_proxy: http://myproxy
-#    https_proxy: http://myproxy
+TIMEZONE: America/New_York

@@ -19,3 +19,4 @@ PACKAGES:
     - httpd
     - ImageMagick
     - squid
+    - bzip2
