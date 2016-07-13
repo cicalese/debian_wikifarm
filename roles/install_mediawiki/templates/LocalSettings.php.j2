@@ -16,12 +16,12 @@ if (isset($_SERVER['WIKI_NAME'])) {
 }
 $wgMetaNamespace = $wgSitename;
 
-if( file_exists( "WikiFarm/Debug.php" ) ) {
-  require_once( "WikiFarm/Debug.php" );
+if( file_exists( __DIR__ . "/WikiFarm/Debug.php" ) ) {
+  require_once( __DIR__ . "/WikiFarm/Debug.php" );
 }
 
-require_once( "WikiFarm/Server.php" );
-require_once( "WikiFarm/Keys.php" );
+require_once( __DIR__ . "/WikiFarm/Server.php" );
+require_once( __DIR__ . "/WikiFarm/Keys.php" );
 
 $INSTANCE_DIR = "{{ MW_INSTANCE_DIRECTORY }}/$wgSitename";
 
@@ -45,7 +45,7 @@ if( file_exists( "$INSTANCE_DIR/branding/favicon.ico" ) ) {
   $wgFavicon = "/$wgSitename/branding/favicon.ico";
 }
 
-require_once( "WikiFarm/Email.php" );
+require_once( __DIR__ . "/WikiFarm/Email.php" );
 
 ## Database settings
 $wgDBtype = "mysql";
@@ -72,7 +72,7 @@ $wgMemCachedServers = array();
 ## be publically accessible from the web.
 #$wgCacheDirectory = "$IP/cache";
 
-require_once( "WikiFarm/Upload.php" );
+require_once( __DIR__ . "/WikiFarm/Upload.php" );
 
 # Site language code, should be one of the list in ./languages/Names.php
 $wgLanguageCode = "en";
@@ -88,14 +88,14 @@ $wgRightsIcon = "";
 # Path to the GNU diff3 utility. Used for conflict resolution.
 $wgDiff3 = "/usr/bin/diff3";
 
-if( file_exists( "WikiFarm/WikiFamilyPreConfiguration.php" ) ) {
-  require_once( "WikiFarm/WikiFamilyPreConfiguration.php" );
+if( file_exists( __DIR__ . "/WikiFarm/WikiFamilyPreConfiguration.php" ) ) {
+  require_once( __DIR__ . "/WikiFarm/WikiFamilyPreConfiguration.php" );
 }
 
-require_once( "WikiFarm/Skins.php" );
+require_once( __DIR__ . "/WikiFarm/Skins.php" );
 
-if( file_exists( "WikiFarm/Interwiki.php" ) ) {
-  require_once( "WikiFarm/Interwiki.php" );
+if( file_exists( __DIR__ . "/WikiFarm/Interwiki.php" ) ) {
+  require_once( __DIR__ . "/WikiFarm/Interwiki.php" );
 }
 
 if( file_exists( "$INSTANCE_DIR/Namespaces.php" ) ) {
@@ -108,26 +108,26 @@ if( file_exists( "$INSTANCE_DIR/PreConfiguration.php" ) ) {
 
 $ED = __DIR__ . '/extensions';
 
-if( file_exists( "WikiFarm/Authentication.php" ) ) {
-  require_once( "WikiFarm/Authentication.php" );
+if( file_exists( __DIR__ . "/WikiFarm/Authentication.php" ) ) {
+  require_once( __DIR__ . "/WikiFarm/Authentication.php" );
 }
 
-if( file_exists( "WikiFarm/Permissions.php" ) ) {
-  require_once( "WikiFarm/Permissions.php" );
+if( file_exists( __DIR__ . "/WikiFarm/Permissions.php" ) ) {
+  require_once( __DIR__ . "/WikiFarm/Permissions.php" );
 }
 
-if( file_exists( "WikiFarm/GlobalExtensions.php" ) ) {
-  require_once( "WikiFarm/GlobalExtensions.php" );
+if( file_exists( __DIR__ . "/WikiFarm/GlobalExtensions.php" ) ) {
+  require_once( __DIR__ . "/WikiFarm/GlobalExtensions.php" );
 }
 
-if( file_exists( "WikiFarm/LocalExtensions.php" ) ) {
-  require_once( "WikiFarm/LocalExtensions.php" );
+if( file_exists( __DIR__ . "/WikiFarm/LocalExtensions.php" ) ) {
+  require_once( __DIR__ . "/WikiFarm/LocalExtensions.php" );
 }
 
 if( file_exists( "$INSTANCE_DIR/PostConfiguration.php" ) ) {
   require_once( "$INSTANCE_DIR/PostConfiguration.php" );
 }
 
-if( file_exists( "WikiFarm/WikiFamilyPostConfiguration.php" ) ) {
-  require_once( "WikiFarm/WikiFamilyPostConfiguration.php" );
+if( file_exists( __DIR__ . "/WikiFarm/WikiFamilyPostConfiguration.php" ) ) {
+  require_once( __DIR__ . "/WikiFarm/WikiFamilyPostConfiguration.php" );
 }
