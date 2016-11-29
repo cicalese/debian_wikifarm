@@ -12,7 +12,7 @@
     SKINS:
 
       - name: "Vector"
-        url: "{{ MW_SKINS_GIT_URL_ROOT }}Vector.git"
+        url: "{{ MW_GIT_URL_ROOT }}/SVEC/vector.git"
         version: "{{ MW_RELEASE }}"
 
       - name: "foreground"
