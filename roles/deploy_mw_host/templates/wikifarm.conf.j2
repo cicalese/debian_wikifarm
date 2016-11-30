@@ -8,6 +8,14 @@ SetEnvIf Request_URI "^/([^/]+)" WIKI_NAME=$1
     Require all granted
   </IfVersion>
 </Directory>
+<Directory "{{ MW_INSTANCE_DIRECTORY }}/*/branding">
+  <IfVersion < 2.4>
+    Allow from all
+  </IfVersion>
+  <IfVersion >= 2.4>
+    Require all granted
+  </IfVersion>
+</Directory>
 <Directory "{{ MW_INSTANCE_DIRECTORY }}/*/images">
   Require all denied
 </Directory>

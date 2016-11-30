@@ -2,7 +2,7 @@ DEFAULT_EXTENSIONS:
 
   - name: "Semantic MediaWiki"
     composer: "mediawiki/semantic-media-wiki"
-    version: "2.4.1"
+    version: "2.4.2"
     config: |
       enableSemantics($wgSitename);
       $smwgLinksInValues = true;
@@ -28,19 +28,22 @@ DEFAULT_EXTENSIONS:
 
   - name: "Lingo"
     composer: "mediawiki/lingo"
-    version: "1.2.0"
+    version: "dev-{{ MW_RELEASE }}"
+    enable: global
 
   - name: "ImageMap"
     composer: "mediawiki/image-map"
-    version: "dev-master#65fb633"
+    version: "dev-{{ MW_RELEASE }}"
 
   - name: "UserFunctions"
     composer: "mediawiki/user-functions"
-    version: "dev-master"
+    version: "dev-{{ MW_RELEASE }}"
 
   - name: "Scribunto"
     composer: "mediawiki/scribunto"
     version: "dev-{{ MW_RELEASE }}"
+    enable: global
+    legacy: true
     config: |
       $wgScribuntoDefaultEngine = 'luasandbox';
       $wgScribuntoUseGeSHi = true;
@@ -238,7 +241,7 @@ DEFAULT_EXTENSIONS:
 
   - name: "Cargo"
     url: "{{ MW_GIT_URL_ROOT }}ECRG/extension-cargo.git"
-    version: "b069a7e"
+    version: master
 
   - name: "CustomNavBlocks"
     url: "https://github.com/mathiasertl/CustomNavBlocks.git"
