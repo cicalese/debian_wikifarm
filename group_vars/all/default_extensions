@@ -53,6 +53,10 @@ DEFAULT_EXTENSIONS:
     composer: "mediawiki/semantic-scribunto"
     version: "dev-master"
 
+  - name: "Header Footer"
+    composer: "mediawiki/header-footer"
+    version: "dev-master"
+
   - name: "WikiEditor"
     url: "{{ MW_GIT_URL_ROOT }}EWED/extension-wikieditor.git"
     enable: global
@@ -169,6 +173,7 @@ DEFAULT_EXTENSIONS:
     config: |
       $wgAllowDisplayTitle = true;
       $wgRestrictDisplayTitle = false;
+      $wgDisplayTitleHideSubtitle = true;
 
   - name: "VIKI"
     url: "{{ MW_GIT_URL_ROOT }}EVIK/extension-viki.git"
