@@ -29,7 +29,6 @@ DEFAULT_EXTENSIONS:
   - name: "Lingo"
     composer: "mediawiki/lingo"
     version: "dev-{{ MW_RELEASE }}"
-    enable: global
 
   - name: "ImageMap"
     composer: "mediawiki/image-map"
@@ -79,19 +78,14 @@ DEFAULT_EXTENSIONS:
     url: "{{ MW_GIT_URL_ROOT }}ECIT/extension-cite.git"
     enable: global
 
-  - name: "CommentStreams"
-    url: "{{ MW_GIT_URL_ROOT }}ECOS/extension-commentstreams.git"
-    version: master
-    enable: global
-
   - name: "HitCounters"
     url: "{{ MW_GIT_URL_ROOT }}EHTC/extension-hitcounters.git"
     enable: global
+    version: master
 
   - name: "SyntaxHighlight_GeSHi"
     url: "{{ MW_GIT_URL_ROOT }}ESHG/extension-syntaxhighlight_geshi.git"
     enable: global
-    #composer_update: true
 
   - name: "Arrays"
     url: "{{ MW_GIT_URL_ROOT }}EARR/extension-arrays.git"
@@ -175,6 +169,11 @@ DEFAULT_EXTENSIONS:
       $wgRestrictDisplayTitle = false;
       $wgDisplayTitleHideSubtitle = true;
 
+  - name: "SemanticRating"
+    url: "{{ MW_GIT_URL_ROOT }}ESRA/extension-semanticrating.git"
+    version: master
+    enable: global
+
   - name: "VIKI"
     url: "{{ MW_GIT_URL_ROOT }}EVIK/extension-viki.git"
     version: master
@@ -207,6 +206,13 @@ DEFAULT_EXTENSIONS:
     version: master
     legacy: true
     enable: global
+
+  - name: "CommentStreams"
+    url: "{{ MW_GIT_URL_ROOT }}ECOS/extension-commentstreams.git"
+    version: master
+
+  - name: "Echo"
+    url: "{{ MW_GIT_URL_ROOT }}ECHO/extension-echo.git"
 
   - name: "DynamicPageList"
     url: "{{ MW_GIT_URL_ROOT }}EDPL/extension-dynamicpagelist.git"

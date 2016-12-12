@@ -4,6 +4,7 @@ $wgGroupPermissions['*']['read'] = true;
 $wgGroupPermissions['*']['edit'] = false;
 
 $wgGroupPermissions['*']['createaccount'] = false;
+$wgGroupPermissions['*']['autocreateaccount'] = true;
 
 $wgGroupPermissions['confirmed' ]['read'] = true;
 $wgGroupPermissions['confirmed' ]['edit'] = true;

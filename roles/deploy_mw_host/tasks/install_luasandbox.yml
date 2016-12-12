@@ -4,8 +4,8 @@
     state=latest
   with_items:
     - php-devel
-    - lua
-    - lua-devel
+    - luajit
+    - luajit-devel
 
 - name: check out luasandbox from git
   git:

@@ -65,7 +65,8 @@ $wgDBmysql5 = false;
 
 ## Shared memory settings
 $wgMainCacheType = CACHE_ACCEL;
-$wgMemCachedServers = array();
+$wgMemCachedServers = [];
+$wgMessageCacheType = CACHE_DB;
 
 ## Set $wgCacheDirectory to a writable directory on the web server
 ## to make your wiki go slightly faster. The directory should not
@@ -74,8 +75,21 @@ $wgMemCachedServers = array();
 
 require_once( __DIR__ . "/WikiFarm/Upload.php" );
 
+# Periodically send a pingback to https://www.mediawiki.org/ with basic data
+# about this MediaWiki instance. The Wikimedia Foundation shares this data
+# with MediaWiki developers to help guide future development efforts.
+$wgPingback = false;
+
+## Set $wgCacheDirectory to a writable directory on the web server
+## to make your wiki go slightly faster. The directory should not
+## be publically accessible from the web.
+#$wgCacheDirectory = "$IP/cache";
+
 # Site language code, should be one of the list in ./languages/Names.php
 $wgLanguageCode = "en";
+
+# Changing this will log out all existing sessions.
+$wgAuthenticationTokenVersion = "1";
 
 ## For attaching licensing metadata to pages, and displaying an
 ## appropriate copyright notice / icon. GNU Free Documentation

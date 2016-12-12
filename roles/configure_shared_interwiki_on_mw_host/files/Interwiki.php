@@ -1,6 +1,6 @@
 <?php
 $wgSharedDB = "SHARED_WIKI_TABLES";
 $wgSharedPrefix = false;
-$wgSharedTables = array( 'interwiki' );
+$wgSharedTables = [ 'interwiki' ];
 $wgEnableScaryTranscluding = true;
 $wgTranscludeCacheExpiry=0;
