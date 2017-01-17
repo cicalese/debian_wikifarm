@@ -1,6 +1,11 @@
 cache_mgr root
 visible_hostname {{ SQUID_HOSTNAME }}
-https_port {{ SQUID_LISTEN_ADDRESS }} accel cert={{ CERT_DIRECTORY }}/site.crt key={{ CERT_DIRECTORY }}/private.key defaultsite={{ SQUID_HOSTNAME }} vhost
+https_port {{ SQUID_LISTEN_ADDRESS }} accel vhost \
+	cert={{ CERT_DIRECTORY }}/site.crt \
+	key={{ CERT_DIRECTORY }}/private.key \
+	defaultsite={{ SQUID_HOSTNAME }} \
+	cipher=HIGH:!RC4:!RC2:!DES:!SSLv2:!MEDIUM:!LOW:!NULL \
+	options=ALL:NO_SSLv2:NO_SSLv3
 http_port {{ PURGE_LISTEN_ADDRESS }} accel  defaultsite={{ SQUID_HOSTNAME }} vhost
 cache_peer 127.0.0.1 parent {{ APACHE_LISTEN_PORT }} 0 no-query originserver no-digest login=PASS
 
