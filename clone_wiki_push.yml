@@ -55,7 +55,7 @@
         dest={{ CLONE_DIRECTORY }}
 
     - name: archive destination wiki instance directory
-      shell: tar cfj {{ CLONE_DIRECTORY }}/{{ TO_WIKI_NAME | default(FROM_WIKI_NAME) }}-{{ TO_MW_HOST }}.tar.bz2 -C {{ MW_INSTANCE_DIRECTORY }} {{ FROM_WIKI_NAME }}
+      shell: tar cfj {{ CLONE_DIRECTORY }}/{{ TO_WIKI_NAME | default(FROM_WIKI_NAME) }}-{{ TO_MW_HOST }}.tar.bz2 -C {{ MW_INSTANCE_DIRECTORY }} {{ TO_WIKI_NAME | default(FROM_WIKI_NAME) }}
 
     - name: remove destination wiki instance directory
       file:
