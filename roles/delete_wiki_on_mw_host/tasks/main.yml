@@ -1,0 +1,14 @@
+- name: delete wiki Apache configuration file
+  file:
+    path={{ APACHE_INSTANCE_DIRECTORY }}/{{ WIKI_NAME }}.conf
+    state=absent
+
+- name: restart Apache
+  service:
+    name=httpd
+    state=restarted
+
+- name: delete instance directory
+  file:
+    path={{ MW_INSTANCE_DIRECTORY }}/{{ WIKI_NAME }}
+    state=absent

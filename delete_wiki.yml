@@ -1,0 +1,13 @@
+- name: Delete a wiki - DB tasks
+
+  hosts: "{{ DB_HOST | default(MW_HOST) }}"
+
+  roles:
+    - delete_wiki_on_db_host
+
+- name: Delete a wiki - MediaWiki tasks
+
+  hosts: "{{ MW_HOST }}"
+
+  roles:
+    - delete_wiki_on_mw_host
