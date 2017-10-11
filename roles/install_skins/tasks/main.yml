@@ -4,8 +4,8 @@
     dest={{ MW_WIKIFARM_CONFIG_DIRECTORY }}/{{ item }}
     force=no
     mode=644
-    owner=apache
-    group=apache
+    owner=www-data
+    group=www-data
   with_items:
     - Skins.php
 
@@ -14,6 +14,8 @@
     repo={{ item.url }}
     dest={{ MW_CODE_DIRECTORY }}/skins/{{ item.name }}
     version={{ item.version }}
+    force=yes
+    accept_hostkey=yes
   with_items: "{{ SKINS }}"
 
 - name: configure skins

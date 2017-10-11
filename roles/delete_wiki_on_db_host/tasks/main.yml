@@ -1,6 +1,0 @@
-- name: delete wiki schema
-  mysql_db:
-    name={{ WIKI_NAME }}
-    login_user=root
-    login_password={{ MYSQL_ROOT_PASSWORD }}
-    state=absent

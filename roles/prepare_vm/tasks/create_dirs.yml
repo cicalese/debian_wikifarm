@@ -1,0 +1,39 @@
+- name: create root directory
+  file:
+    state=directory
+    path={{ ROOT_DIRECTORY }}
+    mode=0775
+    owner=root
+    group=root
+
+- name: create clone directory
+  file:
+    state=directory
+    path={{ CLONE_DIRECTORY }}
+    mode=0775
+    owner=root
+    group=root
+
+- name: create Apache directory hierarchy
+  file:
+    state=directory
+    path={{ item }}
+    mode=2775
+    owner=www-data
+    group=www-data
+  with_items:
+    - "{{ APACHE_DIRECTORY }}"
+    - "{{ APACHE_CONF_DIRECTORY }}"
+    - "{{ APACHE_INSTANCE_DIRECTORY }}"
+    - "{{ APACHE_HTML_DIRECTORY }}"
+
+- name: create MediaWiki directory
+  file:
+    state=directory
+    path={{ item }}
+    mode=2775
+    owner=www-data
+    group=www-data
+  with_items:
+    - "{{ MW_DIRECTORY }}"
+    - "{{ MW_INSTANCE_DIRECTORY }}"

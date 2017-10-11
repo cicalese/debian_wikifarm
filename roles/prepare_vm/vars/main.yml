@@ -1,0 +1,22 @@
+PACKAGES:
+    - mariadb-server
+    - python-mysqldb
+    - php
+    - php-mbstring
+    - php-apcu
+    - php-mysqlnd
+    - php-xml
+    - php-codesniffer
+    - php-ldap
+    - php-curl
+    - php-dev
+    - apache2
+    - imagemagick
+    - bzip2
+    - luajit
+    - libluajit-5.1-dev
+    - pkg-config
+    - re2c
+    - make
+    - zip
+    - unzip

@@ -4,8 +4,8 @@
     dest={{ MW_WIKIFARM_CONFIG_DIRECTORY }}/{{ item }}
     force=no
     mode=644
-    owner=apache
-    group=apache
+    owner=www-data
+    group=www-data
   with_items:
     - GlobalExtensions.php
     - LocalExtensions.php
@@ -21,6 +21,7 @@
     repo={{ item.url }}
     dest={{ MW_CODE_RELEASE_DIRECTORY }}/extensions/{{ item.name }}
     version={{ item.version | default(MW_RELEASE) }}
+    force=yes
     accept_hostkey=yes
   with_items: "{{ EXTENSIONS }}"
   when: item.url is defined

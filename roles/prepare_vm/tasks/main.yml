@@ -1,0 +1,7 @@
+- include: install_packages.yml
+- include: create_dirs.yml
+- include: configure_database.yml
+- include: configure_php.yml
+- include: configure_apache.yml
+- include: install_luasandbox.yml
+- include: install_composer.yml

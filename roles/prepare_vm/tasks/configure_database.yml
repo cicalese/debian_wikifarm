@@ -1,0 +1,7 @@
+- name: grant access to empty wiki to wiki user (db host == wiki host)
+  mysql_user:
+    name={{ DB_WIKI_USER }}
+    password={{ DB_WIKI_PASSWORD }}
+    priv="{{ EMPTY_WIKI_NAME }}.*:SELECT,INSERT,UPDATE,DELETE,INDEX,ALTER,CREATE,DROP,CREATE TEMPORARY TABLES"
+    append_privs=true
+    host=localhost

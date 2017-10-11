@@ -49,10 +49,10 @@ require_once( __DIR__ . "/WikiFarm/Email.php" );
 
 ## Database settings
 $wgDBtype = "mysql";
-$wgDBserver = "{{ DB_HOST | default('localhost') }}:{{ MYSQL_PORT | default(3306) }}";
+$wgDBserver = "{{ DB_HOST | default('localhost') }}:{{ DB_PORT | default(3306) }}";
 $wgDBname = $wgSitename;
-$wgDBuser = "{{ MYSQL_WIKI_USER }}";
-$wgDBpassword = "{{ MYSQL_WIKI_PASSWORD }}";
+$wgDBuser = "{{ DB_WIKI_USER }}";
+$wgDBpassword = "{{ DB_WIKI_PASSWORD }}";
 
 # MySQL specific settings
 $wgDBprefix = "";

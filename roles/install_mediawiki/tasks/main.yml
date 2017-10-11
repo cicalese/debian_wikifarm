@@ -8,9 +8,6 @@
   shell: composer update
     chdir={{ MW_CODE_RELEASE_DIRECTORY }}
 
-- name: restore MediaWiki file context
-  shell: restorecon -Rv {{ MW_DIRECTORY }}
-
 - name: remove LocalSettings.php if it already exists
   file:
     path={{ MW_CODE_RELEASE_DIRECTORY }}/LocalSettings.php
@@ -24,13 +21,13 @@
 - name: remove empty wiki schema from database if it already exists
   mysql_db:
     name={{ EMPTY_WIKI_NAME }}
-    login_host={{ DB_HOST | default("localhost") }}
-    login_user={{ MYSQL_WIKI_USER }}
-    login_password={{ MYSQL_WIKI_PASSWORD }}
+    login_host=localhost
+    login_user={{ DB_WIKI_USER }}
+    login_password={{ DB_WIKI_PASSWORD }}
     state=absent
 
 - name: create empty wiki and LocalSettings file
-  shell: php maintenance/install.php {{ EMPTY_WIKI_NAME }} {{ WIKI_ADMIN_USER }} --pass {{ WIKI_ADMIN_PASSWORD }} --dbserver {{ DB_HOST | default("localhost") }} --dbname {{ EMPTY_WIKI_NAME }} --dbuser {{ MYSQL_WIKI_USER }} --dbpass {{ MYSQL_WIKI_PASSWORD }}
+  shell: php maintenance/install.php {{ EMPTY_WIKI_NAME }} {{ WIKI_ADMIN_USER }} --pass {{ WIKI_ADMIN_PASSWORD }} --dbserver localhost --dbname {{ EMPTY_WIKI_NAME }} --dbuser {{ DB_WIKI_USER }} --dbpass {{ DB_WIKI_PASSWORD }}
     chdir={{ MW_CODE_RELEASE_DIRECTORY }}
 
 - name: extract keys from generated LocalSettings.php file
@@ -47,16 +44,16 @@
     src=LocalSettings.php.j2
     dest={{ MW_CODE_RELEASE_DIRECTORY }}/LocalSettings.php
     mode=644
-    owner=apache
-    group=apache
+    owner=www-data
+    group=www-data
 
 - name: copy configuration files 2/4
   copy:
     src={{ item }}
     dest={{ MW_WIKIFARM_CONFIG_DIRECTORY }}/{{ item }}
     mode=644
-    owner=apache
-    group=apache
+    owner=www-data
+    group=www-data
   with_items:
     - Debug.php
     - Upload.php
@@ -67,16 +64,16 @@
     src=Server.php.j2
     dest={{ MW_WIKIFARM_CONFIG_DIRECTORY }}/Server.php
     mode=644
-    owner=apache
-    group=apache
+    owner=www-data
+    group=www-data
 
 - name: copy configuration files 4/4
   template:
     src=Email.php.j2
     dest={{ MW_WIKIFARM_CONFIG_DIRECTORY }}/Email.php
     mode=644
-    owner=apache
-    group=apache
+    owner=www-data
+    group=www-data
 
 - name: create link to the newly installed MediaWiki version
   file:

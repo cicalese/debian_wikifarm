@@ -1,8 +1,0 @@
-- name: copy interwiki configuration file
-  copy:
-    src=Interwiki.php
-    dest={{ MW_WIKIFARM_CONFIG_DIRECTORY }}/Interwiki.php
-    mode=644
-    owner=apache
-    group=apache
-

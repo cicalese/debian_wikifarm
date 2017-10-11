@@ -1,0 +1,17 @@
+- name: check out luasandbox from git
+  git:
+    repo={{ MW_LUASANDBOX_GIT_URL }}
+    dest=/usr/src/luasandbox
+    version=master
+
+- name: compile and install luasandbox
+  shell: phpize && ./configure --prefix=/usr/lib/php && make all install
+  args:
+    chdir: /usr/src/luasandbox
+
+- name: copy luasandbox initialization file
+  copy:
+    src=luasandbox.ini
+    dest=/etc/php/7.0/apache2/conf.d/20-luasandbox.ini
+    mode=0600
+    owner=root

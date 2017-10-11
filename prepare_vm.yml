@@ -1,8 +1,8 @@
-- name: Install MediWiki
+- name: Prepare Virtual Machine for MediaWiki
 
   hosts: vms
 
   roles:
-    - install_mediawiki
+    - prepare_vm
 
   environment: "{{ PROXY_ENV | default({}) }}"

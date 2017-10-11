@@ -1,0 +1,49 @@
+- name: grant access to empty wiki to wiki user
+  mysql_user:
+    name={{ DB_WIKI_USER }}
+    password={{ DB_WIKI_PASSWORD }}
+    priv="{{ WIKI_NAME }}.*:SELECT,INSERT,UPDATE,DELETE,INDEX,ALTER,CREATE,DROP,CREATE TEMPORARY TABLES"
+    append_privs=true
+    host=localhost
+    login_user=root
+    login_password={{ DB_ROOT_PASSWORD }}
+
+- name: create new wiki schema
+  mysql_db:
+    name={{ WIKI_NAME }}
+    login_user=root
+    login_password={{ DB_ROOT_PASSWORD }}
+    state=present
+
+- name: copy empty wiki schema to new wiki schema
+  shell: mysqldump {{ EMPTY_WIKI_NAME }} -u root --password={{ DB_ROOT_PASSWORD }} | mysql {{ WIKI_NAME }} -u root --password={{ DB_ROOT_PASSWORD }}
+
+- name: create wiki Apache configuration file
+  template:
+    src=wiki.conf.j2
+    dest={{ APACHE_INSTANCE_DIRECTORY }}/{{ WIKI_NAME }}.conf
+    mode=0644
+    owner=www-data
+    group=www-data
+
+- name: restart Apache
+  service:
+    name=apache2
+    state=restarted
+
+- name: create instance directories
+  file:
+    path={{ item }}
+    state=directory
+    owner=www-data
+    group=www-data
+    mode=2755
+  with_items:
+    - "{{ MW_INSTANCE_DIRECTORY }}/{{ WIKI_NAME }}/branding"
+    - "{{ MW_INSTANCE_DIRECTORY }}/{{ WIKI_NAME }}/images"
+    - "{{ MW_INSTANCE_DIRECTORY }}/{{ WIKI_NAME }}/images/temp"
+    - "{{ MW_INSTANCE_DIRECTORY }}/{{ WIKI_NAME }}/images/thumb"
+
+- name: run update maintenance script on new wiki
+  shell: WIKI_NAME={{ WIKI_NAME }} php maintenance/update.php --quick
+    chdir={{ MW_CODE_DIRECTORY }}

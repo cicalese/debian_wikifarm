@@ -1,4 +1,0 @@
-- include: install_packages.yml
-- include: configure_selinux.yml
-- include: create_dirs.yml
-- include: configure_mysql.yml

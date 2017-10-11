@@ -1,6 +1,6 @@
 - name: Install MediaWiki extensions
 
-  hosts: mw_hosts
+  hosts: vms
 
   roles:
     - install_extensions

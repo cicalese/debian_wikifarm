@@ -1,2 +1,0 @@
-- name: set MySQL file context
-  shell: semanage fcontext -a -t mysqld_db_t "{{ MYSQL_DIRECTORY }}(/.*)?"

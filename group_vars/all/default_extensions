@@ -2,7 +2,7 @@ DEFAULT_EXTENSIONS:
 
   - name: "Semantic MediaWiki"
     composer: "mediawiki/semantic-media-wiki"
-    version: "2.4.2"
+    version: "2.5.3"
     config: |
       enableSemantics($wgSitename);
       $smwgLinksInValues = true;
@@ -10,7 +10,7 @@ DEFAULT_EXTENSIONS:
 
   - name: "Semantic Result Formats"
     composer: "mediawiki/semantic-result-formats"
-    version: "2.4.0"
+    version: "2.5.0"
     config: |
       $srfgFormats[] = 'tagcloud';
 
@@ -28,10 +28,6 @@ DEFAULT_EXTENSIONS:
 
   - name: "Lingo"
     composer: "mediawiki/lingo"
-    version: "dev-{{ MW_RELEASE }}"
-
-  - name: "ImageMap"
-    composer: "mediawiki/image-map"
     version: "dev-{{ MW_RELEASE }}"
 
   - name: "UserFunctions"
@@ -56,36 +52,14 @@ DEFAULT_EXTENSIONS:
     composer: "mediawiki/header-footer"
     version: "dev-master"
 
-  - name: "WikiEditor"
-    url: "{{ MW_GIT_URL_ROOT }}EWED/extension-wikieditor.git"
-    enable: global
-    config: |
-      $wgDefaultUserOptions['usebetatoolbar'] = 1;
-      $wgDefaultUserOptions['usebetatoolbar-cgd'] = 1;
-      $wgDefaultUserOptions['wikieditor-preview'] = 1;
-
   - name: "CodeEditor"
     url: "{{ MW_GIT_URL_ROOT }}ECED/extension-codeeditor.git"
-    enable: global
-
-  - name: "ParserFunctions"
-    url: "{{ MW_GIT_URL_ROOT }}EPFN/extension-parserfunctions.git"
-    enable: global
-    config: |
-      $wgPFEnableStringFunctions = true;
-
-  - name: "Cite"
-    url: "{{ MW_GIT_URL_ROOT }}ECIT/extension-cite.git"
     enable: global
 
   - name: "HitCounters"
     url: "{{ MW_GIT_URL_ROOT }}EHTC/extension-hitcounters.git"
     enable: global
     version: master
-
-  - name: "SyntaxHighlight_GeSHi"
-    url: "{{ MW_GIT_URL_ROOT }}ESHG/extension-syntaxhighlight_geshi.git"
-    enable: global
 
   - name: "Arrays"
     url: "{{ MW_GIT_URL_ROOT }}EARR/extension-arrays.git"
@@ -217,9 +191,6 @@ DEFAULT_EXTENSIONS:
   - name: "DynamicPageList"
     url: "{{ MW_GIT_URL_ROOT }}EDPL/extension-dynamicpagelist.git"
 
-  - name: "InputBox"
-    url: "{{ MW_GIT_URL_ROOT }}EINB/extension-inputbox.git"
-
   - name: "WhosOnline"
     url: "{{ MW_GIT_URL_ROOT }}EWHO/extension-whosonline.git"
     version: "master"
@@ -239,6 +210,7 @@ DEFAULT_EXTENSIONS:
   - name: "OpenIDConnect"
     url: "{{ MW_GIT_URL_ROOT }}EIDC/extension-openidconnect.git"
     version: master
+    composer_update: true
 
   - name: "SimpleSAMLphp"
     url: "{{ MW_GIT_URL_ROOT }}ESAM/extension-simplesamlphp.git"

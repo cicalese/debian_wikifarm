@@ -1,13 +1,6 @@
-- name: Create a new wiki from the saved empty wiki schema - DB tasks
+- name: Create a new wiki from the saved empty wiki schema
 
-  hosts: "{{ DB_HOST | default(MW_HOST) }}"
-
-  roles:
-    - create_new_wiki_on_db_host
-
-- name: Create a new wiki from the saved empty wiki schema - MediaWiki tasks
-
-  hosts: "{{ MW_HOST }}"
+  hosts: "{{ HOST }}"
 
   roles:
-    - create_new_wiki_on_mw_host
+    - create_new_wiki

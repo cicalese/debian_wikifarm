@@ -1,5 +1,0 @@
-PACKAGES:
-    - libselinux-python
-    - policycoreutils-python
-    - yum-utils
-    - vim

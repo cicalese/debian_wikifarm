@@ -1,0 +1,34 @@
+- name: create global wiki farm config file
+  template:
+    src=wikifarm.conf.j2
+    dest="{{ APACHE_CONF_DIRECTORY }}/wikifarm.conf"
+    mode=0644
+
+- name: edit Apache configuration file 1/2
+  replace:
+    dest=/etc/apache2/sites-enabled/000-default.conf
+    regexp="/var/www/html"
+    replace="{{ APACHE_HTML_DIRECTORY }}"
+    backup=yes
+
+- name: edit Apache configuration file 2/2
+  lineinfile:
+    dest=/etc/apache2/apache2.conf
+    insertafter=EOF
+    line="Include {{ APACHE_CONF_DIRECTORY }}/wikifarm.conf"
+
+- name: copy wiki farm index file
+  template:
+    src=wiki_index.php.j2
+    dest="{{ APACHE_HTML_DIRECTORY }}/index.php"
+    mode=0600
+    owner=www-data
+    group=www-data
+
+- name: enable rewrite module
+  shell: a2enmod rewrite
+
+- name: restart Apache
+  service:
+    name=apache2
+    state=restarted
