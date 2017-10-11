@@ -16,7 +16,7 @@
     state=present
 
 - name: copy empty wiki schema to new wiki schema
-  shell: mysqldump {{ EMPTY_WIKI_NAME }} -u root --password={{ DB_ROOT_PASSWORD }} | mysql {{ WIKI_NAME }} -u root --password={{ DB_ROOT_PASSWORD }}
+  shell: mysqldump {{ EMPTY_WIKI_NAME }} -u root --password="{{ DB_ROOT_PASSWORD }}" | mysql {{ WIKI_NAME }} -u root --password="{{ DB_ROOT_PASSWORD }}"
 
 - name: create wiki Apache configuration file
   template:

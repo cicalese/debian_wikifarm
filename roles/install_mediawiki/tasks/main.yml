@@ -27,7 +27,7 @@
     state=absent
 
 - name: create empty wiki and LocalSettings file
-  shell: php maintenance/install.php {{ EMPTY_WIKI_NAME }} {{ WIKI_ADMIN_USER }} --pass {{ WIKI_ADMIN_PASSWORD }} --dbserver localhost --dbname {{ EMPTY_WIKI_NAME }} --dbuser {{ DB_WIKI_USER }} --dbpass {{ DB_WIKI_PASSWORD }}
+  shell: php maintenance/install.php {{ EMPTY_WIKI_NAME }} {{ WIKI_ADMIN_USER }} --pass "{{ WIKI_ADMIN_PASSWORD }}" --dbserver localhost --dbname {{ EMPTY_WIKI_NAME }} --dbuser {{ DB_WIKI_USER }} --dbpass "{{ DB_WIKI_PASSWORD }}"
     chdir={{ MW_CODE_RELEASE_DIRECTORY }}
 
 - name: extract keys from generated LocalSettings.php file
