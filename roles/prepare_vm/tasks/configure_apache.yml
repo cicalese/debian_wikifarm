@@ -25,6 +25,15 @@
     owner=www-data
     group=www-data
 
+- name: disable mpm_event module
+  ansible.builtin.shell: a2dismod mpm_event
+
+- name: enable mpm_prefork module
+  ansible.builtin.shell: a2enmod mpm_prefork
+
+- name: enable php7.3 module
+  ansible.builtin.shell: a2enmod php7.3
+
 - name: enable rewrite module
   ansible.builtin.shell: a2enmod rewrite
 
