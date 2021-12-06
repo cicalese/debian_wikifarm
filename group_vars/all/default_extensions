@@ -2,7 +2,7 @@ DEFAULT_EXTENSIONS:
 
   - name: "Semantic MediaWiki"
     composer: "mediawiki/semantic-media-wiki"
-    version: "2.5.3"
+    version: "3.2"
     config: |
       enableSemantics($wgSitename);
       $smwgLinksInValues = true;
@@ -10,7 +10,7 @@ DEFAULT_EXTENSIONS:
 
   - name: "Semantic Result Formats"
     composer: "mediawiki/semantic-result-formats"
-    version: "2.5.0"
+    version: "3.2.0"
     config: |
       $srfgFormats[] = 'tagcloud';
 
@@ -22,35 +22,17 @@ DEFAULT_EXTENSIONS:
       $sespSpecialProperties[] = '_CUSER';
       $sespSpecialProperties[] = '_VIEWS';
 
-  - name: "Maps"
-    composer: "mediawiki/maps"
-    version: "4.0.1"
-
-  - name: "Lingo"
-    composer: "mediawiki/lingo"
-    version: "dev-{{ MW_RELEASE }}"
-
   - name: "UserFunctions"
     composer: "mediawiki/user-functions"
     version: "dev-{{ MW_RELEASE }}"
 
   - name: "Scribunto"
-    composer: "mediawiki/scribunto"
-    version: "dev-{{ MW_RELEASE }}"
+    url: "{{ MW_GIT_URL_ROOT }}ELUA/extension-scribunto.git"
     enable: global
-    legacy: true
     config: |
       $wgScribuntoDefaultEngine = 'luasandbox';
       $wgScribuntoUseGeSHi = true;
       $wgScribuntoUseCodeEditor = true;
-
-  - name: "Semantic Scribunto"
-    composer: "mediawiki/semantic-scribunto"
-    version: "dev-master"
-
-  - name: "Header Footer"
-    composer: "mediawiki/header-footer"
-    version: "dev-master"
 
   - name: "CodeEditor"
     url: "{{ MW_GIT_URL_ROOT }}ECED/extension-codeeditor.git"
@@ -59,16 +41,13 @@ DEFAULT_EXTENSIONS:
   - name: "HitCounters"
     url: "{{ MW_GIT_URL_ROOT }}EHTC/extension-hitcounters.git"
     enable: global
-    version: master
 
   - name: "Arrays"
     url: "{{ MW_GIT_URL_ROOT }}EARR/extension-arrays.git"
-    legacy: true
     enable: global
 
   - name: "HeaderTabs"
     url: "{{ MW_GIT_URL_ROOT }}EHET/extension-headertabs.git"
-    legacy: true
     enable: global
     config: |
       $htRenderSingleTab = true;
@@ -76,101 +55,57 @@ DEFAULT_EXTENSIONS:
 
   - name: "Variables"
     url: "{{ MW_GIT_URL_ROOT }}EVAR/extension-variables.git"
-    legacy: true
     enable: global
 
   - name: "DataTransfer"
     url: "{{ MW_GIT_URL_ROOT }}EDTR/extension-datatransfer.git"
-    legacy: true
     enable: global
 
   - name: "ReplaceText"
     url: "{{ MW_GIT_URL_ROOT }}ERPT/extension-replacetext.git"
-    legacy: true
     enable: global
 
   - name: "ExternalData"
     url: "{{ MW_GIT_URL_ROOT }}EXDA/extension-externaldata.git"
-    legacy: true
     enable: global
 
   - name: "PipeEscape"
     url: "{{ MW_GIT_URL_ROOT }}EPIE/extensions-pipeescape.git"
-    version: master
-    legacy: true
     enable: global
 
   - name: "UrlGetParameters"
     url: "{{ MW_GIT_URL_ROOT }}EUGP/extension-urlgetparameters.git"
-    legacy: true
     enable: global
 
   - name: "MagicNoCache"
     url: "{{ MW_GIT_URL_ROOT }}EMNC/extension-magicnocache.git"
-    legacy: true
     enable: global
 
   - name: "Widgets"
     url: "{{ MW_GIT_URL_ROOT }}EWID/extension-widgets.git"
-    legacy: true
     submodule: true
     enable: global
 
   - name: "PageForms"
     url: "{{ MW_GIT_URL_ROOT }}EPFM/extension-pageforms.git"
-    version: master
-    legacy: true
     enable: global
     config: |
       $sfgRenameEditTabs=true;
 
   - name: "TitleIcon"
     url: "{{ MW_GIT_URL_ROOT }}ETIC/extension-titleicon.git"
-    version: master
-    enable: global
-
-  - name: "HierarchyBuilder"
-    url: "{{ MW_GIT_URL_ROOT }}EHIB/extension-hierarchybuilder.git"
-    version: master
     enable: global
 
   - name: "DisplayTitle"
     url: "{{ MW_GIT_URL_ROOT }}EDPT/extension-displaytitle.git"
-    version: master
     enable: global
     config: |
       $wgAllowDisplayTitle = true;
       $wgRestrictDisplayTitle = false;
       $wgDisplayTitleHideSubtitle = true;
 
-  - name: "SemanticRating"
-    url: "{{ MW_GIT_URL_ROOT }}ESRA/extension-semanticrating.git"
-    version: master
-    enable: global
-
-  - name: "VIKI"
-    url: "{{ MW_GIT_URL_ROOT }}EVIK/extension-viki.git"
-    version: master
-    enable: global
-    config: |
-      $wgRegisterInternalExternals = true;
-      $wgVIKI_Hidden_Categories = array('Framework Pages');
-      $wgVIKI_Second_Order_Links = true;
-
-  - name: "VikiTitleIcon"
-    url: "{{ MW_GIT_URL_ROOT }}EVTI/extension-vikititleicon.git"
-    version: master
-    enable: global
-
-  - name: "VikiSemanticTitle"
-    url: "{{ MW_GIT_URL_ROOT }}EVST/extension-vikisemantictitle.git"
-    version: master
-    enable: global
-
   - name: "JSBreadCrumbs"
     url: "{{ MW_GIT_URL_ROOT }}EJSB/extension-jsbreadcrumbs.git"
-    version: master
-    legacy: true
     config: |
       $wgDefaultUserOptions['jsbreadcrumbs-showcrumbssidebar'] = true;
     enable: global
@@ -178,62 +113,23 @@ DEFAULT_EXTENSIONS:
   - name: "SimpleMathJax"
     url: "https://github.com/jmnote/SimpleMathJax.git"
     version: master
-    legacy: true
     enable: global
 
   - name: "CommentStreams"
     url: "{{ MW_GIT_URL_ROOT }}ECOS/extension-commentstreams.git"
-    version: master
 
   - name: "Echo"
     url: "{{ MW_GIT_URL_ROOT }}ECHO/extension-echo.git"
 
-  - name: "DynamicPageList"
-    url: "{{ MW_GIT_URL_ROOT }}EDPL/extension-dynamicpagelist.git"
-
   - name: "WhosOnline"
     url: "{{ MW_GIT_URL_ROOT }}EWHO/extension-whosonline.git"
-    version: "master"
-
-  - name: "SafeDelete"
-    url: "{{ MW_GIT_URL_ROOT }}ESDL/extension-safedelete.git"
-    version: master
-
-  - name: "SemanticDependency"
-    url: "{{ MW_GIT_URL_ROOT }}ESDP/extension-semanticdependency.git"
-    version: master
 
   - name: "PluggableAuth"
     url: "{{ MW_GIT_URL_ROOT }}EPLG/extension-pluggableauth.git"
-    version: master
 
   - name: "OpenIDConnect"
     url: "{{ MW_GIT_URL_ROOT }}EIDC/extension-openidconnect.git"
-    version: master
     composer_update: true
 
   - name: "SimpleSAMLphp"
     url: "{{ MW_GIT_URL_ROOT }}ESAM/extension-simplesamlphp.git"
-    version: master
-
-  - name: "LdapAuthentication"
-    url: "{{ MW_GIT_URL_ROOT }}ELDA/extension-ldapauthentication.git"
-
-  - name: "LDAPAuthorization"
-    url: "{{ MW_GIT_URL_ROOT }}ELDP/extension-ldapauthorization.git"
-
-  - name: "Cargo"
-    url: "{{ MW_GIT_URL_ROOT }}ECRG/extension-cargo.git"
-    version: master
-
-  - name: "CustomNavBlocks"
-    url: "https://github.com/mathiasertl/CustomNavBlocks.git"
-    version: master
-
-  - name: "SimpleTooltip"
-    url: "https://github.com/Fannon/SimpleTooltip.git"
-    version: master
-
-  - name: "Piwik"
-    url: "https://github.com/DaSchTour/piwik-mediawiki-extension.git"
-    version: master

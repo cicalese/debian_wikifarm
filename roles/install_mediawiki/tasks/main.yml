@@ -1,46 +1,45 @@
 - name: check out MediaWiki from git
-  git:
+  ansible.builtin.git:
     repo={{ MW_GIT_URL }}
     dest={{ MW_CODE_RELEASE_DIRECTORY }}
     version=remotes/origin/{{ MW_RELEASE }}
 
 - name: get MediaWiki libraries using composer
-  shell: composer update
+  ansible.builtin.shell: yes | composer update
     chdir={{ MW_CODE_RELEASE_DIRECTORY }}
 
 - name: remove LocalSettings.php if it already exists
-  file:
+  ansible.builtin.file:
     path={{ MW_CODE_RELEASE_DIRECTORY }}/LocalSettings.php
     state=absent
 
 - name: create subdirectory for wiki farm config files
-  file:
+  ansible.builtin.file:
     path={{ MW_WIKIFARM_CONFIG_DIRECTORY }}
     state=directory
 
 - name: remove empty wiki schema from database if it already exists
-  mysql_db:
+  community.mysql.mysql_db:
     name={{ EMPTY_WIKI_NAME }}
     login_host=localhost
-    login_user={{ DB_WIKI_USER }}
-    login_password={{ DB_WIKI_PASSWORD }}
+    login_unix_socket=/var/run/mysqld/mysqld.sock
     state=absent
 
 - name: create empty wiki and LocalSettings file
-  shell: php maintenance/install.php {{ EMPTY_WIKI_NAME }} {{ WIKI_ADMIN_USER }} --pass "{{ WIKI_ADMIN_PASSWORD }}" --dbserver localhost --dbname {{ EMPTY_WIKI_NAME }} --dbuser {{ DB_WIKI_USER }} --dbpass "{{ DB_WIKI_PASSWORD }}"
+  ansible.builtin.shell: php maintenance/install.php {{ EMPTY_WIKI_NAME }} {{ WIKI_ADMIN_USER }} --pass "{{ WIKI_ADMIN_PASSWORD }}" --dbserver localhost --dbname {{ EMPTY_WIKI_NAME }} --dbuser {{ DB_WIKI_USER }} --dbpass "{{ DB_WIKI_PASSWORD }}"
     chdir={{ MW_CODE_RELEASE_DIRECTORY }}
 
 - name: extract keys from generated LocalSettings.php file
-  shell: echo "<?php" > {{ MW_WIKIFARM_CONFIG_DIRECTORY }}/Keys.php; grep "^\$wgSecretKey" LocalSettings.php >> {{ MW_WIKIFARM_CONFIG_DIRECTORY }}/Keys.php; grep "^\$wgUpgradeKey" LocalSettings.php >> {{ MW_WIKIFARM_CONFIG_DIRECTORY }}/Keys.php
+  ansible.builtin.shell: echo "<?php" > {{ MW_WIKIFARM_CONFIG_DIRECTORY }}/Keys.php; grep "^\$wgSecretKey" LocalSettings.php >> {{ MW_WIKIFARM_CONFIG_DIRECTORY }}/Keys.php; grep "^\$wgUpgradeKey" LocalSettings.php >> {{ MW_WIKIFARM_CONFIG_DIRECTORY }}/Keys.php
     chdir={{ MW_CODE_RELEASE_DIRECTORY }}
 
 - name: remove newly created LocalSettings.php
-  file:
+  ansible.builtin.file:
     path={{ MW_CODE_RELEASE_DIRECTORY }}/LocalSettings.php
     state=absent
 
 - name: copy configuration files 1/4
-  template:
+  ansible.builtin.template:
     src=LocalSettings.php.j2
     dest={{ MW_CODE_RELEASE_DIRECTORY }}/LocalSettings.php
     mode=644
@@ -48,7 +47,7 @@
     group=www-data
 
 - name: copy configuration files 2/4
-  copy:
+  ansible.builtin.copy:
     src={{ item }}
     dest={{ MW_WIKIFARM_CONFIG_DIRECTORY }}/{{ item }}
     mode=644
@@ -60,7 +59,7 @@
     - Permissions.php
 
 - name: copy configuration files 3/4
-  template:
+  ansible.builtin.template:
     src=Server.php.j2
     dest={{ MW_WIKIFARM_CONFIG_DIRECTORY }}/Server.php
     mode=644
@@ -68,7 +67,7 @@
     group=www-data
 
 - name: copy configuration files 4/4
-  template:
+  ansible.builtin.template:
     src=Email.php.j2
     dest={{ MW_WIKIFARM_CONFIG_DIRECTORY }}/Email.php
     mode=644
@@ -76,7 +75,7 @@
     group=www-data
 
 - name: create link to the newly installed MediaWiki version
-  file:
+  ansible.builtin.file:
     src={{ MW_CODE_RELEASE_DIRECTORY }}
     dest={{ MW_CODE_DIRECTORY }}
     state=link

@@ -1,6 +1,6 @@
 PACKAGES:
     - mariadb-server
-    - python-mysqldb
+    - python3-pymysql
     - php
     - php-mbstring
     - php-apcu
@@ -9,12 +9,13 @@ PACKAGES:
     - php-codesniffer
     - php-ldap
     - php-curl
+    - php-intl
     - php-dev
     - apache2
     - imagemagick
     - bzip2
     - luajit
-    - libluajit-5.1-dev
+    - liblua5.1-0-dev
     - pkg-config
     - re2c
     - make

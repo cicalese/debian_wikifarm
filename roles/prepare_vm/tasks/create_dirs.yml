@@ -1,5 +1,5 @@
 - name: create root directory
-  file:
+  ansible.builtin.file:
     state=directory
     path={{ ROOT_DIRECTORY }}
     mode=0775
@@ -7,7 +7,7 @@
     group=root
 
 - name: create clone directory
-  file:
+  ansible.builtin.file:
     state=directory
     path={{ CLONE_DIRECTORY }}
     mode=0775
@@ -15,7 +15,7 @@
     group=root
 
 - name: create Apache directory hierarchy
-  file:
+  ansible.builtin.file:
     state=directory
     path={{ item }}
     mode=2775
@@ -28,7 +28,7 @@
     - "{{ APACHE_HTML_DIRECTORY }}"
 
 - name: create MediaWiki directory
-  file:
+  ansible.builtin.file:
     state=directory
     path={{ item }}
     mode=2775

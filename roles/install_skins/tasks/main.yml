@@ -1,5 +1,5 @@
 - name: copy configuration files
-  copy:
+  ansible.builtin.copy:
     src={{ item }}
     dest={{ MW_WIKIFARM_CONFIG_DIRECTORY }}/{{ item }}
     force=no
@@ -10,7 +10,7 @@
     - Skins.php
 
 - name: check out skins from git
-  git:
+  ansible.builtin.git:
     repo={{ item.url }}
     dest={{ MW_CODE_DIRECTORY }}/skins/{{ item.name }}
     version={{ item.version }}
@@ -19,7 +19,7 @@
   with_items: "{{ SKINS }}"
 
 - name: configure skins
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest={{ MW_WIKIFARM_CONFIG_DIRECTORY }}/Skins.php
     regexp="wfLoadSkin\(\s*['\"]{{ item.name }}['\"]"
     line="wfLoadSkin( '{{ item.name }}' );"
