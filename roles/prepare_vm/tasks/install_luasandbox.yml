@@ -12,6 +12,6 @@
 - name: copy luasandbox initialization file
   ansible.builtin.copy:
     src=luasandbox.ini
-    dest=/etc/php/7.3/apache2/conf.d/20-luasandbox.ini
+    dest=/etc/php/7.4/apache2/conf.d/20-luasandbox.ini
     mode=0600
     owner=root

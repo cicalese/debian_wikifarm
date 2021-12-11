@@ -38,46 +38,30 @@
   with_items: "{{ EXTENSIONS }}"
   when: item.composer_update is defined and item.composer_update
 
-- name: configure global extensions 1/3
+- name: configure global extensions 1/2
   ansible.builtin.lineinfile:
     dest={{ MW_WIKIFARM_CONFIG_DIRECTORY }}/GlobalExtensions.php
     regexp="['\"/]{{ item.name }}(.php|)['\"]"
     line="wfLoadExtension( \"{{ item.name }}\" );"
   with_items: "{{ EXTENSIONS }}"
-  when: item.enable is defined and item.enable == "global" and (not item.legacy is defined or not item.legacy)
+  when: item.enable is defined and item.enable == "global"
 
-- name: configure global extensions 2/3
-  ansible.builtin.lineinfile:
-    dest={{ MW_WIKIFARM_CONFIG_DIRECTORY }}/GlobalExtensions.php
-    regexp="['\"/]{{ item.name }}(.php|)['\"]"
-    line="require_once( \"$EXTENSION_DIRECTORY/{{ item.name }}/{{ item.name }}.php\" );"
-  with_items: "{{ EXTENSIONS }}"
-  when: item.enable is defined and item.enable == "global" and item.legacy is defined and item.legacy
-
-- name: configure global extensions 3/3
+- name: configure global extensions 2/2
   ansible.builtin.lineinfile:
     dest={{ MW_WIKIFARM_CONFIG_DIRECTORY }}/GlobalExtensions.php
     line="\n{{ item.config }}"
   with_items: "{{ EXTENSIONS }}"
-  when: ((item.enable is defined and item.enable == "global") or item.composer is defined) and item.config is defined
+  when: item.enable is defined and item.enable == "global" and item.config is defined
 
-- name: configure local extensions 1/3
+- name: configure local extensions 1/2
   ansible.builtin.lineinfile:
     dest={{ MW_WIKIFARM_CONFIG_DIRECTORY }}/LocalExtensions.php
     regexp="['\"/]{{ item.name }}(.php|)['\"]"
     line="wfLoadExtension( \"{{ item.name }}\" );"
   with_items: "{{ EXTENSIONS }}"
-  when: item.enable is defined and item.enable == "local" and (not item.legacy is defined or not item.legacy)
+  when: item.enable is defined and item.enable == "local"
 
-- name: configure local extensions 2/3
-  ansible.builtin.lineinfile:
-    dest={{ MW_WIKIFARM_CONFIG_DIRECTORY }}/LocalExtensions.php
-    regexp="['\"/]{{ item.name }}(.php|)['\"]"
-    line="require_once( \"$EXTENSION_DIRECTORY/{{ item.name }}/{{ item.name }}.php\" );"
-  with_items: "{{ EXTENSIONS }}"
-  when: item.enable is defined and item.enable == "local" and item.legacy is defined and item.legacy
-
-- name: configure global extensions 3/3
+- name: configure local extensions 2/2
   ansible.builtin.lineinfile:
     dest={{ MW_WIKIFARM_CONFIG_DIRECTORY }}/LocalExtensions.php
     line="\n{{ item.config }}"

@@ -1,0 +1,72 @@
+- name: Push source database from controller to destination and regenerate
+
+  hosts: "{{ TO_HOST }}"
+
+  gather_facts: no
+
+  tasks:
+
+    - name: push source database dump to destination
+      ansible.builtin.copy:
+        src={{ LOCAL_CLONE_DIRECTORY }}/{{ FROM_WIKI_NAME }}-{{ FROM_HOST }}.sql
+        dest={{ CLONE_DIRECTORY }}
+
+    - name: dump destination database
+      community.mysql.mysql_db:
+        state=dump
+        name={{ TO_WIKI_NAME | default(FROM_WIKI_NAME) }}
+        target={{ CLONE_DIRECTORY }}/{{ TO_WIKI_NAME | default(FROM_WIKI_NAME) }}-{{ TO_HOST }}.sql
+        login_host={{ TO_HOST }}
+        login_unix_socket=/var/run/mysqld/mysqld.sock
+
+    - name: remove destination database if it exists
+      community.mysql.mysql_db:
+        state=absent
+        name={{ TO_WIKI_NAME | default(FROM_WIKI_NAME) }}
+        login_unix_socket=/var/run/mysqld/mysqld.sock
+
+    - name: create empty destination database
+      community.mysql.mysql_db:
+        state=present
+        name={{ TO_WIKI_NAME | default(FROM_WIKI_NAME) }}
+        login_unix_socket=/var/run/mysqld/mysqld.sock
+
+    - name: import source database dump at destination
+      community.mysql.mysql_db:
+        state=import
+        name={{ TO_WIKI_NAME | default(FROM_WIKI_NAME) }}
+        target={{ CLONE_DIRECTORY }}/{{ FROM_WIKI_NAME }}-{{ FROM_HOST }}.sql
+        login_unix_socket=/var/run/mysqld/mysqld.sock
+
+- name: Push source wiki instance directory from controller to destination and unarchive
+
+  hosts: "{{ TO_HOST }}"
+
+  gather_facts: no
+
+  tasks:
+
+    - name: push source wiki instance directory to destination
+      ansible.builtin.copy:
+        src={{ LOCAL_CLONE_DIRECTORY }}/{{ FROM_WIKI_NAME }}-{{ FROM_HOST }}.tar.bz2
+        dest={{ CLONE_DIRECTORY }}
+
+    - name: archive destination wiki instance directory
+      ansible.builtin.shell: tar cfj {{ CLONE_DIRECTORY }}/{{ TO_WIKI_NAME | default(FROM_WIKI_NAME) }}-{{ TO_HOST }}.tar.bz2 -C {{ MW_INSTANCE_DIRECTORY }} {{ TO_WIKI_NAME | default(FROM_WIKI_NAME) }}
+
+    - name: remove destination wiki instance directory
+      ansible.builtin.file:
+        path={{ MW_INSTANCE_DIRECTORY }}/{{ TO_WIKI_NAME | default(FROM_WIKI_NAME) }}
+        state=absent
+
+    - name: unarchive source wiki instance directory at destination (rename)
+      ansible.builtin.shell: tar xfj {{ CLONE_DIRECTORY }}/{{ FROM_WIKI_NAME }}-{{ FROM_HOST }}.tar.bz2 -C {{ MW_INSTANCE_DIRECTORY }} {{ FROM_WIKI_NAME }} --transform "s/^{{ FROM_WIKI_NAME }}/{{ TO_WIKI_NAME }}/"
+      when: TO_WIKI_NAME is defined
+
+    - name: unarchive source wiki instance directory at destination (no rename)
+      ansible.builtin.shell: tar xfj {{ CLONE_DIRECTORY }}/{{ FROM_WIKI_NAME }}-{{ FROM_HOST }}.tar.bz2 -C {{ MW_INSTANCE_DIRECTORY }} {{ FROM_WIKI_NAME }}
+      when: TO_WIKI_NAME is not defined
+
+    - name: run update maintenance script on new wiki
+      ansible.builtin.shell: WIKI_NAME={{ TO_WIKI_NAME | default(FROM_WIKI_NAME) }} php maintenance/update.php --quick
+        chdir={{ MW_CODE_DIRECTORY }}

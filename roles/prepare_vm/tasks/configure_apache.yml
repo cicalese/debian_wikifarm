@@ -31,8 +31,8 @@
 - name: enable mpm_prefork module
   ansible.builtin.shell: a2enmod mpm_prefork
 
-- name: enable php7.3 module
-  ansible.builtin.shell: a2enmod php7.3
+- name: enable php7.4 module
+  ansible.builtin.shell: a2enmod php7.4
 
 - name: enable rewrite module
   ansible.builtin.shell: a2enmod rewrite

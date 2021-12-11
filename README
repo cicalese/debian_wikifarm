@@ -1,8 +1,11 @@
 ansible-playbook prepare_vm.yml -bu cicalese -i hosts
-ansible-playbook install_mediawiki.yml -e "MW_RELEASE=REL1_37" -bu cicalese -i hosts
-ansible-playbook install_extensions.yml -e "MW_RELEASE=REL1_37" -bu cicalese -i hosts
-ansible-playbook install_skins.yml -e "MW_RELEASE=REL1_37" -bu cicalese -i hosts
+ansible-playbook install_mediawiki.yml -e "MW_RELEASE=REL1_35" -bu cicalese -i hosts
+ansible-playbook install_extensions.yml -e "MW_RELEASE=REL1_35" -bu cicalese -i hosts
+ansible-playbook install_skins.yml -e "MW_RELEASE=REL1_35" -bu cicalese -i hosts
 ansible-playbook create_new_wiki.yml -e "HOST=wikifarm.pluggableauth.eqiad1.wikimedia.cloud WIKI_NAME=test" -bu cicalese -i hosts
 
 # because of the way the web proxy works, you will need to edit $wgServer in
 # /WIKIFARM/MEDIAWIKI/mediawiki/WikiFarm/Server.php
+
+Cloning (experimental):
+ansible-playbook clone_wiki_push.yml -e "FROM_HOST=<host1> TO_HOST=<host2> FROM_WIKI_NAME=<oldname> LOCAL_CLONE_DIRECTORY=../clone" -bu cicalese -i hosts

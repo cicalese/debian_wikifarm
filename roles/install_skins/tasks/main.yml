@@ -9,18 +9,30 @@
   with_items:
     - Skins.php
 
+- name: get skins from composer
+  ansible.builtin.shell: yes | composer require {{ item.composer }}:{{ item.version | default("dev-master") }}
+    chdir={{ MW_CODE_RELEASE_DIRECTORY }}
+  with_items: "{{ SKINS }}"
+  when: item.composer is defined
+
 - name: check out skins from git
   ansible.builtin.git:
     repo={{ item.url }}
-    dest={{ MW_CODE_DIRECTORY }}/skins/{{ item.name }}
-    version={{ item.version }}
+    dest={{ MW_CODE_RELEASE_DIRECTORY }}/skins/{{ item.name }}
+    version={{ item.version | default(MW_RELEASE) }}
     force=yes
     accept_hostkey=yes
   with_items: "{{ SKINS }}"
+  when: item.url is defined
 
-- name: configure skins
-  ansible.builtin.lineinfile:
-    dest={{ MW_WIKIFARM_CONFIG_DIRECTORY }}/Skins.php
-    regexp="wfLoadSkin\(\s*['\"]{{ item.name }}['\"]"
-    line="wfLoadSkin( '{{ item.name }}' );"
+- name: initialize/update submodules
+  ansible.builtin.shell: git submodule init; git submodule update
+    chdir={{ MW_CODE_RELEASE_DIRECTORY }}/skins/{{ item.name }}
   with_items: "{{ SKINS }}"
+  when: item.submodule is defined and item.submodule
+
+- name: run composer update for skins that require it
+  ansible.builtin.shell: yes | composer update
+    chdir={{ MW_CODE_RELEASE_DIRECTORY }}/skins/{{ item.name }}
+  with_items: "{{ SKINS }}"
+  when: item.composer_update is defined and item.composer_update

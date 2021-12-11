@@ -1,30 +1,39 @@
 DEFAULT_EXTENSIONS:
 
-  - name: "Semantic MediaWiki"
+  - name: "SemanticMediaWiki"
     composer: "mediawiki/semantic-media-wiki"
-    version: "3.2"
+    version: "3.2.3"
+    enable: global
     config: |
       enableSemantics($wgSitename);
       $smwgLinksInValues = true;
       $smwgPageSpecialProperties = array( '_MDAT', '_CDAT' );
 
-  - name: "Semantic Result Formats"
+  - name: "SemanticResultFormats"
     composer: "mediawiki/semantic-result-formats"
     version: "3.2.0"
+    enable: global
     config: |
       $srfgFormats[] = 'tagcloud';
 
-  - name: "Semantic Extra Special Properties"
+  - name: "SemanticExtraSpecialProperties"
     composer: "mediawiki/semantic-extra-special-properties"
-    version: "dev-master"
+    version: "2.1.0"
+    enable: global
     config: |
       $sespSpecialProperties[] = '_EUSER';
       $sespSpecialProperties[] = '_CUSER';
       $sespSpecialProperties[] = '_VIEWS';
 
-  - name: "UserFunctions"
-    composer: "mediawiki/user-functions"
-    version: "dev-{{ MW_RELEASE }}"
+  - name: "SemanticScribunto"
+    composer: "mediawiki/semantic-scribunto"
+    version: "2.1.0"
+    enable: global
+
+  - name: "Mermaid"
+    composer: "mediawiki/mermaid"
+    version: "~3.0"
+    enable: global
 
   - name: "Scribunto"
     url: "{{ MW_GIT_URL_ROOT }}ELUA/extension-scribunto.git"
@@ -71,6 +80,7 @@ DEFAULT_EXTENSIONS:
 
   - name: "PipeEscape"
     url: "{{ MW_GIT_URL_ROOT }}EPIE/extensions-pipeescape.git"
+    version: master
     enable: global
 
   - name: "UrlGetParameters"
@@ -106,8 +116,12 @@ DEFAULT_EXTENSIONS:
 
   - name: "JSBreadCrumbs"
     url: "{{ MW_GIT_URL_ROOT }}EJSB/extension-jsbreadcrumbs.git"
+    enable: global
     config: |
       $wgDefaultUserOptions['jsbreadcrumbs-showcrumbssidebar'] = true;
+
+  - name: "VersionCompare"
+    url: "{{ MW_GIT_URL_ROOT }}EVRC/extension-versioncompare.git"
     enable: global
 
   - name: "SimpleMathJax"
@@ -115,8 +129,16 @@ DEFAULT_EXTENSIONS:
     version: master
     enable: global
 
+  - name: "UserFunctions"
+    url: "{{ MW_GIT_URL_ROOT }}EUFU/extension-userfunctions.git"
+    version: master
+    enable: global
+
   - name: "CommentStreams"
     url: "{{ MW_GIT_URL_ROOT }}ECOS/extension-commentstreams.git"
+
+  - name: "CreateUserPage"
+    url: "{{ MW_GIT_URL_ROOT }}ECUP/extension-createuserpage.git"
 
   - name: "Echo"
     url: "{{ MW_GIT_URL_ROOT }}ECHO/extension-echo.git"
@@ -133,3 +155,6 @@ DEFAULT_EXTENSIONS:
 
   - name: "SimpleSAMLphp"
     url: "{{ MW_GIT_URL_ROOT }}ESAM/extension-simplesamlphp.git"
+
+  - name: "EmailAuthorization"
+    url: "{{ MW_GIT_URL_ROOT }}EEAU/extension-email_authorization.git"

@@ -11,6 +11,7 @@
 
     SKINS:
 
-      - name: "foreground"
-        url: https://github.com/thingles/foreground.git
-        version: master
+      - name: "chameleon"
+        composer: "mediawiki/chameleon-skin"
+        version: "~3.0"
+        composer_update: true

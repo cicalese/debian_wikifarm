@@ -1,0 +1,41 @@
+- name: Dump and fetch source database to controller
+
+  hosts: "{{ FROM_HOST }}"
+
+  gather_facts: no
+
+  tasks:
+
+    - name: dump source database
+      community.mysql.mysql_db:
+        state=dump
+        name={{ FROM_WIKI_NAME }}
+        target={{ CLONE_DIRECTORY }}/{{ FROM_WIKI_NAME }}-{{ FROM_HOST | default(FROM_HOST) }}.sql
+        login_host={{ FROM_HOST }}
+        login_user=root
+        login_unix_socket=/var/run/mysqld/mysqld.sock
+
+    - name: fetch source database to controller
+      ansible.builtin.fetch:
+        src={{ CLONE_DIRECTORY }}/{{ FROM_WIKI_NAME }}-{{ FROM_HOST | default(FROM_HOST) }}.sql
+        dest={{ LOCAL_CLONE_DIRECTORY }}/
+        flat=yes
+        fail_on_missing=yes
+
+- name: Archive and fetch source wiki instance directory to controller
+
+  hosts: "{{ FROM_HOST }}"
+
+  gather_facts: no
+
+  tasks:
+
+    - name: archive source wiki instance directory
+      ansible.builtin.shell: tar cfj {{ CLONE_DIRECTORY }}/{{ FROM_WIKI_NAME }}-{{ FROM_HOST }}.tar.bz2 -C {{ MW_INSTANCE_DIRECTORY }} {{ FROM_WIKI_NAME }}
+
+    - name: fetch source wiki instance directory to controller
+      ansible.builtin.fetch:
+        src={{ CLONE_DIRECTORY }}/{{ FROM_WIKI_NAME }}-{{ FROM_HOST }}.tar.bz2
+        dest={{ LOCAL_CLONE_DIRECTORY }}/
+        flat=yes
+        fail_on_missing=yes
