@@ -85,6 +85,7 @@ DEFAULT_EXTENSIONS:
 
   - name: "UrlGetParameters"
     url: "{{ MW_GIT_URL_ROOT }}EUGP/extension-urlgetparameters.git"
+    version: master
     enable: global
 
   - name: "MagicNoCache"
