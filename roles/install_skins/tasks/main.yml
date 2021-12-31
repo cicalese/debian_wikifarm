@@ -10,8 +10,12 @@
     - Skins.php
 
 - name: get skins from composer
-  ansible.builtin.shell: yes | composer require {{ item.composer }}:{{ item.version | default("dev-master") }}
-    chdir={{ MW_CODE_RELEASE_DIRECTORY }}
+  community.general.composer:
+    command: require
+    working_dir: "{{ MW_CODE_RELEASE_DIRECTORY }}"
+    arguments: "{{ item.composer }}:{{ item.version | default(\"dev-master\") }}"
+  environment:
+    COMPOSER: composer.local.json
   with_items: "{{ SKINS }}"
   when: item.composer is defined
 
@@ -32,7 +36,13 @@
   when: item.submodule is defined and item.submodule
 
 - name: run composer update for skins that require it
-  ansible.builtin.shell: yes | composer update
-    chdir={{ MW_CODE_RELEASE_DIRECTORY }}/skins/{{ item.name }}
+  community.general.composer:
+    command: update
+    working_dir: "{{ MW_CODE_RELEASE_DIRECTORY }}/skins/{{ item.name }}"
   with_items: "{{ SKINS }}"
   when: item.composer_update is defined and item.composer_update
+
+- name: composer update
+  community.general.composer:
+    command: update
+    working_dir: "{{ MW_CODE_RELEASE_DIRECTORY }}"

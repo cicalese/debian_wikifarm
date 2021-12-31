@@ -5,8 +5,9 @@
     version=remotes/origin/{{ MW_RELEASE }}
 
 - name: get MediaWiki libraries using composer
-  ansible.builtin.shell: yes | composer update
-    chdir={{ MW_CODE_RELEASE_DIRECTORY }}
+  community.general.composer:
+    command: install
+    working_dir: "{{ MW_CODE_RELEASE_DIRECTORY }}"
 
 - name: remove LocalSettings.php if it already exists
   ansible.builtin.file:

@@ -11,8 +11,12 @@
     - LocalExtensions.php
 
 - name: get extensions from composer
-  ansible.builtin.shell: yes | composer require {{ item.composer }}:{{ item.version | default("dev-master") }}
-    chdir={{ MW_CODE_RELEASE_DIRECTORY }}
+  community.general.composer:
+    command: require
+    working_dir: "{{ MW_CODE_RELEASE_DIRECTORY }}"
+    arguments: "{{ item.composer }}:{{ item.version | default(\"dev-master\") }} -W"
+  environment:
+    COMPOSER: composer.local.json
   with_items: "{{ EXTENSIONS }}"
   when: item.composer is defined
 
@@ -33,8 +37,9 @@
   when: item.submodule is defined and item.submodule
 
 - name: run composer update for extensions that require it
-  ansible.builtin.shell: yes | composer update
-    chdir={{ MW_CODE_RELEASE_DIRECTORY }}/extensions/{{ item.name }}
+  community.general.composer:
+    command: update
+    working_dir: "{{ MW_CODE_RELEASE_DIRECTORY }}/extensions/{{ item.name }}"
   with_items: "{{ EXTENSIONS }}"
   when: item.composer_update is defined and item.composer_update
 
@@ -67,3 +72,8 @@
     line="\n{{ item.config }}"
   with_items: "{{ EXTENSIONS }}"
   when: item.enable is defined and item.enable == "local" and item.config is defined
+
+- name: composer update
+  community.general.composer:
+    command: update
+    working_dir: "{{ MW_CODE_RELEASE_DIRECTORY }}"

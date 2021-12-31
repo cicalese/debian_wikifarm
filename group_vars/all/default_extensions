@@ -2,32 +2,28 @@ DEFAULT_EXTENSIONS:
 
   - name: "SemanticMediaWiki"
     composer: "mediawiki/semantic-media-wiki"
-    version: "3.2.3"
+    version: "dev-master"
     enable: global
     config: |
-      enableSemantics($wgSitename);
-      $smwgLinksInValues = true;
-      $smwgPageSpecialProperties = array( '_MDAT', '_CDAT' );
+      $smwgPageSpecialProperties = [ '_MDAT', '_CDAT' ];
 
   - name: "SemanticResultFormats"
     composer: "mediawiki/semantic-result-formats"
-    version: "3.2.0"
+    version: "dev-master"
     enable: global
     config: |
       $srfgFormats[] = 'tagcloud';
 
   - name: "SemanticExtraSpecialProperties"
     composer: "mediawiki/semantic-extra-special-properties"
-    version: "2.1.0"
+    version: "dev-master"
     enable: global
     config: |
-      $sespSpecialProperties[] = '_EUSER';
-      $sespSpecialProperties[] = '_CUSER';
-      $sespSpecialProperties[] = '_VIEWS';
+      $sespgEnabledPropertyList = [ '_EUSER', '_CUSER', '_VIEWS', '_NSID', '_NSNAME' ];
 
   - name: "SemanticScribunto"
     composer: "mediawiki/semantic-scribunto"
-    version: "2.1.0"
+    version: "dev-master"
     enable: global
 
   - name: "Mermaid"
