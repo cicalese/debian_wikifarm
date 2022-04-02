@@ -1,0 +1,4 @@
+config:
+  DebugLogFile: "/tmp/MediaWikiDebug.log"
+  # ShowDBErrorBacktrace: true
+  # ResourceLoaderDebug: true

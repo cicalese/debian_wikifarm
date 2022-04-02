@@ -1,0 +1,13 @@
+includes:
+  - Keys.php
+
+config:
+  Server: "{{ WIKI_URL }}"
+  DBserver: "{{ DB_HOST | default('localhost') }}:{{ DB_PORT | default(3306) }}"
+  DBuser: "{{ DB_WIKI_USER }}"
+  DBpassword: "{{ DB_WIKI_PASSWORD }}"
+  Localtimezone: "{{ TIMEZONE }}"
+  MainCacheType: 3
+  MessageCacheType: 1
+  EmergencyContact: "{{ WIKI_EMAIL }}"
+  PasswordSender: "{{ WIKI_EMAIL }}"

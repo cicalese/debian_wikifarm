@@ -1,0 +1,7 @@
+config:
+  GroupPermissions:
+    '*':
+      edit: false
+      createaccount: false
+      autocreateaccount: true
+  AuthenticationTokenVersion: "1"

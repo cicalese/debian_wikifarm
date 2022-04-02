@@ -1,4 +1,5 @@
 SetEnvIf Request_URI "^/([^/]+)" WIKI_NAME=$1
+SetEnv MW_CONFIG_FILE {{MW_CONFIG_DIRECTORY }}/default.yaml
 
 <Directory "{{ APACHE_HTML_DIRECTORY }}">
   Require all granted

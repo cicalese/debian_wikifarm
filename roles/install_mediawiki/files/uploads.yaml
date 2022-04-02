@@ -1,0 +1,12 @@
+config:
+  EnableUploads: true
+  UseImageMagick: true
+  VerifyMimeType: false
+  FileExtensions:
+    - 'docx'
+    - 'doc'
+    - 'pptx'
+    - 'ppt'
+    - 'xlsx'
+    - 'xls'
+    - 'pdf'

@@ -31,7 +31,7 @@
     chdir={{ MW_CODE_RELEASE_DIRECTORY }}
 
 - name: extract keys from generated LocalSettings.php file
-  ansible.builtin.shell: echo "<?php" > {{ MW_WIKIFARM_CONFIG_DIRECTORY }}/Keys.php; grep "^\$wgSecretKey" LocalSettings.php >> {{ MW_WIKIFARM_CONFIG_DIRECTORY }}/Keys.php; grep "^\$wgUpgradeKey" LocalSettings.php >> {{ MW_WIKIFARM_CONFIG_DIRECTORY }}/Keys.php
+  ansible.builtin.shell: echo "<?php" > {{ MW_CONFIG_DIRECTORY }}/SERVER/Keys.php; grep "^\$wgSecretKey" LocalSettings.php >> {{ MW_CONFIG_DIRECTORY }}/SERVER/Keys.php; grep "^\$wgUpgradeKey" LocalSettings.php >> {{ MW_CONFIG_DIRECTORY }}/SERVER/Keys.php
     chdir={{ MW_CODE_RELEASE_DIRECTORY }}
 
 - name: remove newly created LocalSettings.php
@@ -39,41 +39,25 @@
     path={{ MW_CODE_RELEASE_DIRECTORY }}/LocalSettings.php
     state=absent
 
-- name: copy configuration files 1/4
+- name: copy configuration files 1/3
   ansible.builtin.template:
-    src=LocalSettings.php.j2
-    dest={{ MW_CODE_RELEASE_DIRECTORY }}/LocalSettings.php
+    src=server.yaml.j2
+    dest={{ MW_CONFIG_DIRECTORY }}/SERVER/server.yaml
     mode=644
     owner=www-data
     group=www-data
 
-- name: copy configuration files 2/4
+- name: copy configuration files 2/3
   ansible.builtin.copy:
     src={{ item }}
-    dest={{ MW_WIKIFARM_CONFIG_DIRECTORY }}/{{ item }}
+    dest={{ MW_CONFIG_DIRECTORY }}/SERVER/{{ item }}
     mode=644
     owner=www-data
     group=www-data
   with_items:
-    - Debug.php
-    - Upload.php
-    - Permissions.php
-
-- name: copy configuration files 3/4
-  ansible.builtin.template:
-    src=Server.php.j2
-    dest={{ MW_WIKIFARM_CONFIG_DIRECTORY }}/Server.php
-    mode=644
-    owner=www-data
-    group=www-data
-
-- name: copy configuration files 4/4
-  ansible.builtin.template:
-    src=Email.php.j2
-    dest={{ MW_WIKIFARM_CONFIG_DIRECTORY }}/Email.php
-    mode=644
-    owner=www-data
-    group=www-data
+    - debug.yaml
+    - uploads.yaml
+    - permissions.yaml
 
 - name: create link to the newly installed MediaWiki version
   ansible.builtin.file:
