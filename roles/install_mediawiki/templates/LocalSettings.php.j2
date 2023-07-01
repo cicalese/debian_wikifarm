@@ -37,9 +37,14 @@ $wgResourceBasePath = $wgScriptPath;
 
 ## The relative URL path to the logo.
 if( file_exists( "$INSTANCE_DIR/branding/logo.png" ) ) {
-  $wgLogo = "$wgServer/$wgSitename/branding/logo.png";
+  $wgLogos = [
+    'icon' => "$wgServer/$wgSitename/branding/logo.png",
+    '1x' => "$wgServer/$wgSitename/branding/logo.png"
+  ];
 } else {
-  $wgLogo = "$wgResourceBasePath/resources/assets/wiki.png";
+  $wgLogos = [
+    'icon' => "$wgResourceBasePath/resources/assets/wiki.png"
+  ];
 }
 if( file_exists( "$INSTANCE_DIR/branding/favicon.ico" ) ) {
   $wgFavicon = "$wgServer/$wgSitename/branding/favicon.ico";
