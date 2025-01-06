@@ -1,35 +1,35 @@
 DEFAULT_EXTENSIONS:
 
-  - name: "SemanticMediaWiki"
-    composer: "mediawiki/semantic-media-wiki"
-    version: "dev-master"
-    enable: global
-    config: |
-      $smwgPageSpecialProperties = [ '_MDAT', '_CDAT' ];
+#  - name: "SemanticMediaWiki"
+#    composer: "mediawiki/semantic-media-wiki"
+#    version: "dev-master"
+#    enable: global
+#    config: |
+#      $smwgPageSpecialProperties = [ '_MDAT', '_CDAT' ];
 
-  - name: "SemanticResultFormats"
-    composer: "mediawiki/semantic-result-formats"
-    version: "dev-master"
-    enable: global
-    config: |
-      $srfgFormats[] = 'tagcloud';
+#  - name: "SemanticResultFormats"
+#    composer: "mediawiki/semantic-result-formats"
+#    version: "dev-master"
+#    enable: global
+#    config: |
+#      $srfgFormats[] = 'tagcloud';
 
-  - name: "SemanticExtraSpecialProperties"
-    composer: "mediawiki/semantic-extra-special-properties"
-    version: "dev-master"
-    enable: global
-    config: |
-      $sespgEnabledPropertyList = [ '_EUSER', '_CUSER', '_VIEWS', '_NSID', '_NSNAME' ];
+#  - name: "SemanticExtraSpecialProperties"
+#    composer: "mediawiki/semantic-extra-special-properties"
+#    version: "dev-master"
+#    enable: global
+#    config: |
+#      $sespgEnabledPropertyList = [ '_EUSER', '_CUSER', '_VIEWS', '_NSID', '_NSNAME' ];
 
-  - name: "SemanticScribunto"
-    composer: "mediawiki/semantic-scribunto"
-    version: "dev-master"
-    enable: global
+#  - name: "SemanticScribunto"
+#    composer: "mediawiki/semantic-scribunto"
+#    version: "dev-master"
+#    enable: global
 
-  - name: "Mermaid"
-    composer: "mediawiki/mermaid"
-    version: "~3.0"
-    enable: global
+#  - name: "Mermaid"
+#    composer: "mediawiki/mermaid"
+#    version: "~3.0"
+#    enable: global
 
   - name: "Scribunto"
     url: "{{ MW_GIT_URL_ROOT }}ELUA/extension-scribunto.git"
@@ -121,10 +121,10 @@ DEFAULT_EXTENSIONS:
     url: "{{ MW_GIT_URL_ROOT }}EVRC/extension-versioncompare.git"
     enable: global
 
-  - name: "SimpleMathJax"
-    url: "https://github.com/jmnote/SimpleMathJax.git"
-    version: master
-    enable: global
+#  - name: "SimpleMathJax"
+#    url: "https://github.com/jmnote/SimpleMathJax.git"
+#    version: master
+#    enable: global
 
   - name: "UserFunctions"
     url: "{{ MW_GIT_URL_ROOT }}EUFU/extension-userfunctions.git"

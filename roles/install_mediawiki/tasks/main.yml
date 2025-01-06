@@ -8,6 +8,9 @@
   community.general.composer:
     command: install
     working_dir: "{{ MW_CODE_RELEASE_DIRECTORY }}"
+  environment:
+    COMPOSER_NO_INTERACTION: "1"
+    COMPOSER_ALLOW_SUPERUSER: "1"
 
 - name: remove LocalSettings.php if it already exists
   ansible.builtin.file:

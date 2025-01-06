@@ -16,6 +16,8 @@
     arguments: "{{ item.composer }}:{{ item.version | default(\"dev-master\") }}"
   environment:
     COMPOSER: composer.local.json
+    COMPOSER_NO_INTERACTION: "1"
+    COMPOSER_ALLOW_SUPERUSER: "1"
   with_items: "{{ SKINS }}"
   when: item.composer is defined
 
@@ -41,8 +43,14 @@
     working_dir: "{{ MW_CODE_RELEASE_DIRECTORY }}/skins/{{ item.name }}"
   with_items: "{{ SKINS }}"
   when: item.composer_update is defined and item.composer_update
+  environment:
+    COMPOSER_NO_INTERACTION: "1"
+    COMPOSER_ALLOW_SUPERUSER: "1"
 
 - name: composer update
   community.general.composer:
     command: update
     working_dir: "{{ MW_CODE_RELEASE_DIRECTORY }}"
+  environment:
+    COMPOSER_NO_INTERACTION: "1"
+    COMPOSER_ALLOW_SUPERUSER: "1"

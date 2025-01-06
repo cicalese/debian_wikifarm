@@ -11,7 +11,7 @@
 
     SKINS:
 
-      - name: "chameleon"
-        composer: "mediawiki/chameleon-skin"
-        version: "~3.0"
-        composer_update: true
+#      - name: "chameleon"
+#        composer: "mediawiki/chameleon-skin"
+#        version: "~3.0"
+#        composer_update: true

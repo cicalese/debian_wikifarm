@@ -1,7 +1,7 @@
-- include: install_packages.yml
-- include: create_dirs.yml
-- include: configure_database.yml
-- include: configure_php.yml
-- include: configure_apache.yml
-- include: install_luasandbox.yml
-- include: install_composer.yml
+- include_tasks: install_packages.yml
+- include_tasks: create_dirs.yml
+- include_tasks: configure_database.yml
+- include_tasks: configure_php.yml
+- include_tasks: configure_apache.yml
+- include_tasks: install_luasandbox.yml
+- include_tasks: install_composer.yml

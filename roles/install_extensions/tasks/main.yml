@@ -17,6 +17,8 @@
     arguments: "{{ item.composer }}:{{ item.version | default(\"dev-master\") }} -W"
   environment:
     COMPOSER: composer.local.json
+    COMPOSER_NO_INTERACTION: "1"
+    COMPOSER_ALLOW_SUPERUSER: "1"
   with_items: "{{ EXTENSIONS }}"
   when: item.composer is defined
 
@@ -40,6 +42,9 @@
   community.general.composer:
     command: update
     working_dir: "{{ MW_CODE_RELEASE_DIRECTORY }}/extensions/{{ item.name }}"
+  environment:
+    COMPOSER_NO_INTERACTION: "1"
+    COMPOSER_ALLOW_SUPERUSER: "1"
   with_items: "{{ EXTENSIONS }}"
   when: item.composer_update is defined and item.composer_update
 
@@ -77,3 +82,6 @@
   community.general.composer:
     command: update
     working_dir: "{{ MW_CODE_RELEASE_DIRECTORY }}"
+  environment:
+    COMPOSER_NO_INTERACTION: "1"
+    COMPOSER_ALLOW_SUPERUSER: "1"
